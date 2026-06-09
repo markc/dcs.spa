@@ -411,6 +411,43 @@
     body.scrolled .sidebar-left::after,
     body.scrolled .sidebar-right::after { top: 0; }
 
+    /* Inner-edge resize handle — drag to set sidebar width.
+       Injected by base.js; 10px hit area straddling the visible 1px border,
+       with a 2px accent line shown on hover / while dragging. */
+    .sidebar-resizer {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 10px;
+        z-index: 2;
+        cursor: ew-resize;
+        touch-action: none;
+        /* Off-canvas sidebars sit their inner edge on the viewport edge; the
+           handle's offset would leak a 5px active strip there. Only enable it
+           when the sidebar is actually visible (open covers pinned too). */
+        pointer-events: none;
+    }
+    .sidebar.open .sidebar-resizer { pointer-events: auto; }
+    .sidebar-left .sidebar-resizer { right: -5px; }
+    .sidebar-right .sidebar-resizer { left: -5px; }
+    .sidebar-resizer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--accent);
+        opacity: 0;
+        transition: opacity var(--duration-fast);
+    }
+    .sidebar-left .sidebar-resizer::before { right: 5px; }
+    .sidebar-right .sidebar-resizer::before { left: 5px; }
+    .sidebar-resizer:hover::before,
+    body.resizing .sidebar-resizer::before { opacity: 1; }
+    body.resizing { cursor: ew-resize; user-select: none; }
+    body.resizing .sidebar { transition: none; }
+    @media (max-width: 767px) { .sidebar-resizer { display: none; } }
+
     /* Carousel Header */
     .carousel-header {
         display: flex;

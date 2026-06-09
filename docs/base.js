@@ -122,14 +122,24 @@ const Base = {
         );
     },
 
-    // Sidebar width (side = 'left' | 'right', pct = 10..100, step 10)
-    setSidebarWidth(side, pct) {
-        pct = Math.max(10, Math.min(100, Math.round(pct / 10) * 10));
+    // Apply a sidebar width to the DOM (no persistence). pct clamped 10..100,
+    // rounded to whole percent. Used live while dragging the resize handle.
+    applySidebarWidth(side, pct) {
+        pct = Math.max(10, Math.min(100, Math.round(pct)));
         document.documentElement.style.setProperty(`--sidebar-width-${side}`, pct + '%');
-        const key = side === 'left' ? 'sidebarWidthLeft' : 'sidebarWidthRight';
-        this.state({ [key]: pct });
         const input = document.querySelector(`.sidebar-width-spinner[data-side="${side}"]`);
         if (input && parseInt(input.value) !== pct) input.value = pct;
+        return pct;
+    },
+
+    // Set + persist sidebar width (side = 'left' | 'right'). The spinner path
+    // snaps to step 10; drag passes an already-whole percent for 1% precision.
+    setSidebarWidth(side, pct, snap = true) {
+        if (snap) pct = Math.round(pct / 10) * 10;
+        pct = this.applySidebarWidth(side, pct);
+        const key = side === 'left' ? 'sidebarWidthLeft' : 'sidebarWidthRight';
+        this.state({ [key]: pct });
+        return pct;
     },
 
     // Panel carousel: navigate to panel index.
@@ -214,9 +224,9 @@ const Base = {
         const s = this.state();
         const desktop = window.innerWidth >= 1280;
 
-        // Restore sidebar widths
-        if (s.sidebarWidthLeft) this.setSidebarWidth('left', s.sidebarWidthLeft);
-        if (s.sidebarWidthRight) this.setSidebarWidth('right', s.sidebarWidthRight);
+        // Restore sidebar widths (verbatim — drag stores 1% precision)
+        if (s.sidebarWidthLeft) this.applySidebarWidth('left', s.sidebarWidthLeft);
+        if (s.sidebarWidthRight) this.applySidebarWidth('right', s.sidebarWidthRight);
 
         // Restore carousel transition mode
         const mode = s.carousel || 'slide';
@@ -411,6 +421,46 @@ const Base = {
             input.addEventListener('change', apply);
             input.addEventListener('blur', apply);
         });
+
+        // Sidebar resize handles: inject one on each sidebar's inner edge and
+        // wire pointer-drag → live width var, persisting the final width on release.
+        ['left', 'right'].forEach(side => {
+            const sb = document.querySelector(`.sidebar-${side}`);
+            if (!sb || sb.querySelector('.sidebar-resizer')) return;
+            const handle = document.createElement('div');
+            handle.className = 'sidebar-resizer';
+            handle.dataset.side = side;
+            sb.appendChild(handle);
+        });
+
+        let drag = null;
+        document.addEventListener('pointerdown', e => {
+            const handle = e.target.closest('.sidebar-resizer');
+            if (!handle) return;
+            e.preventDefault();
+            drag = { side: handle.dataset.side, pct: null };
+            handle.setPointerCapture(e.pointerId);
+            document.body.classList.add('resizing');
+        });
+        document.addEventListener('pointermove', e => {
+            if (!drag) return;
+            const vw = window.innerWidth;
+            const raw = drag.side === 'left'
+                ? (e.clientX / vw) * 100
+                : ((vw - e.clientX) / vw) * 100;
+            drag.pct = this.applySidebarWidth(drag.side, raw);
+        });
+        const endDrag = () => {
+            if (!drag) return;
+            document.body.classList.remove('resizing');
+            if (drag.pct !== null) {
+                const key = drag.side === 'left' ? 'sidebarWidthLeft' : 'sidebarWidthRight';
+                this.state({ [key]: drag.pct });
+            }
+            drag = null;
+        };
+        document.addEventListener('pointerup', endDrag);
+        document.addEventListener('pointercancel', endDrag);
 
         // Scroll detection: seamless topnav/sidebar header effect
         const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 0);

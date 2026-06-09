@@ -2,7 +2,7 @@
 
 <img src="docs/dcs-wordmark.svg" alt="Dual Carousel Sidebars" width="720">
 
-**A modular CSS/JS design system: dual off-canvas sidebars with a carousel of panels inside each, OKLCH color schemes, dark/light modes, mobile-first responsive layout, and marketing components. Zero dependencies, no build step.**
+**A modular CSS/JS design system: dual off-canvas sidebars with a carousel of panels inside each, OKLCH color schemes, dark/light modes, mobile-first responsive layout, and marketing components. Zero dependencies (Lucide icons via CDN), no build step.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Zero dependencies](https://img.shields.io/badge/deps-0-1eca85.svg)](#)
@@ -110,9 +110,9 @@ Import the OKLCH color tokens into your Tailwind v4 `@theme` block and use React
 - **Autonomous sidebars** — each side toggles independently; opening one does not close the other
 - Pinnable on desktop (1280px+); pinned sidebars reserve space from main content
 - **Panel carousel** inside each sidebar — slide or fade transitions, dots + chevron nav
-- **Appearance panel** (built in) — theme toggle, carousel-mode toggle, sidebar width sliders, scheme dots
+- **Appearance panel** (built in) — theme toggle, carousel-mode toggle, sidebar-width spinners, scheme dots
 - **Tree widget** — hierarchical nav (file browsers, doc TOCs) with collapsible branches and persisted expand state
-- **Independent sidebar widths** — `--sidebar-width-left` / `--sidebar-width-right`, 25–75% via sliders, clamped for small viewports
+- **Resizable sidebars** — drag the inner edge (1% precision) or use the spinners (step 10); independent left/right, 10–100%, persisted to localStorage and restored on load
 
 ### Cards
 - Mobile: edge-to-edge (no radius, no side borders)
@@ -155,10 +155,8 @@ Import the OKLCH color tokens into your Tailwind v4 `@theme` block and use React
 
 In-tree docs (served alongside the showcase):
 
-- [`docs/_doc/architecture.md`](docs/_doc/architecture.md)
-- [`docs/_doc/color-system.md`](docs/_doc/color-system.md)
-- [`docs/_doc/components.md`](docs/_doc/components.md)
-- [`docs/_doc/usage-patterns.md`](docs/_doc/usage-patterns.md)
+- [`docs/_doc/`](docs/_doc/) — architecture, color-system, components, usage-patterns
+- [`docs/_spec/`](docs/_spec/) — full regeneration spec (DESIGN / LAYOUT / BEHAVIOR + per-scheme design files)
 
 ## Built With DCS
 
