@@ -2,8 +2,12 @@
 // Copyright © 2026 Mark Constable <mc@dcs.spa> (MIT License)
 
 function md(s) {
-    const b = [], L = '\x02', R = '\x03';
+    const b = [], L = '\x02', R = '\x03', Q = '\x05';
     const esc = t => t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    // Block script-bearing URL schemes (javascript:/data:/vbscript:); neutralise
+    // attribute-breakout quotes via a Q placeholder restored to &quot; after esc().
+    const safeUrl = u => /^\s*(?:javascript|data|vbscript):/i.test(u) ? '#' : u;
+    const attr = t => t.replace(/"/g, Q);
 
     // Strip leading YAML frontmatter (Jekyll/Hugo/Pandoc convention)
     s = s.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
@@ -49,8 +53,8 @@ function md(s) {
     s = s.replace(new RegExp(`${L}/blockquote${R}\\s*${L}blockquote${R}`, 'g'), '\n');
 
     // Inline elements
-    s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, `${L}img src="$2" alt="$1"${R}`);
-    s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, `${L}a href="$2"${R}$1${L}/a${R}`);
+    s = s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_, alt, url) => `${L}img src="${attr(safeUrl(url))}" alt="${attr(alt)}"${R}`);
+    s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, txt, url) => `${L}a href="${attr(safeUrl(url))}"${R}${txt}${L}/a${R}`);
     s = s.replace(/(\*\*|__)(.+?)\1/g, `${L}strong${R}$2${L}/strong${R}`);
     s = s.replace(/\*([^*\n]+)\*/g, `${L}em${R}$1${L}/em${R}`);
     s = s.replace(/(?<![^\s])_([^_\n]+)_(?![^\s])/g, `${L}em${R}$1${L}/em${R}`);
@@ -62,7 +66,7 @@ function md(s) {
     // Finalize - escape remaining content, restore protected blocks
     s = esc(s);
     s = s.replace(/\x00(\d+)\x00/g, (_, i) => b[parseInt(i)]);
-    s = s.replace(/\x02/g, '<').replace(/\x03/g, '>');
+    s = s.replace(/\x02/g, '<').replace(/\x03/g, '>').replace(/\x05/g, '&quot;');
 
     // Paragraphs
     return s.split(/\n{2,}/).map(p => {
@@ -76,6 +80,13 @@ function md(s) {
 // Document viewer
 async function loadDoc(path) {
     const content = document.getElementById('content');
+    // Only same-origin relative docs: reject schemes, protocol-relative, absolute,
+    // and parent traversal so a crafted location.hash can't fetch a foreign host.
+    if (!path || /^[a-z][a-z0-9+.-]*:/i.test(path) || path.startsWith('//') ||
+        path.startsWith('/') || path.split('/').includes('..')) {
+        content.innerHTML = '<p>Error: invalid document path</p>';
+        return;
+    }
     try {
         const res = await fetch(path);
         if (!res.ok) throw new Error(`Failed to load ${path}`);

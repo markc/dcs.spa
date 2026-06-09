@@ -6,12 +6,14 @@ const Base = {
     // All state in single localStorage key
     key: 'base-state',
 
-    // Get/set persistent state
+    // Get/set persistent state. Tolerant of corrupt JSON and unavailable storage
+    // (private mode / sandboxed iframe) so one bad value can't break init/restore.
     state(updates) {
-        const s = JSON.parse(localStorage.getItem(this.key) || '{}');
+        let s = {};
+        try { s = JSON.parse(localStorage.getItem(this.key) || '{}') || {}; } catch (e) { s = {}; }
         if (!updates) return s;
         Object.assign(s, updates);
-        localStorage.setItem(this.key, JSON.stringify(s));
+        try { localStorage.setItem(this.key, JSON.stringify(s)); } catch (e) { /* storage unavailable */ }
         return s;
     },
 
@@ -266,7 +268,7 @@ const Base = {
 
         // Restore tree expanded state
         const tree = document.querySelector('.tree');
-        if (tree && s.treeExpanded) {
+        if (tree && Array.isArray(s.treeExpanded)) {
             const branches = tree.querySelectorAll('.tree-branch');
             branches.forEach((b, idx) => {
                 const shouldExpand = s.treeExpanded.includes(idx);
