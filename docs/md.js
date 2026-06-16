@@ -73,7 +73,12 @@ function md(s) {
         p = p.trim();
         if (!p) return '';
         if (/^<(?:h[1-6]|ul|ol|blockquote|hr|pre|table)/.test(p)) return p;
-        return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+        // Soft newlines (source line-wrapping) collapse to a space, like
+        // CommonMark — only a deliberate hard break (a line ending in "\" or two+
+        // trailing spaces) becomes a <br>. Previously every in-paragraph newline
+        // became a <br>, which littered hard-wrapped prose with line breaks.
+        // (Keep the PHP Util::md() twin in sync to preserve identical rendering.)
+        return '<p>' + p.replace(/(?: {2,}|\\)\n/g, '\x06').replace(/\n/g, ' ').replace(/\x06/g, '<br>') + '</p>';
     }).join('\n').trim();
 }
 
