@@ -1,4 +1,6 @@
-// Markdown parser - JS port of PHP Util::md() for identical rendering
+// Markdown parser - JS port of PHP Util::md() for identical rendering.
+// Canonical twin: SPE\App\Md::parse() in markc/spe (app/lib/Md.php) — keep the
+// two in sync (e.g. paragraph soft-break handling) so rendering stays identical.
 // Copyright © 2026 Mark Constable <mc@dcs.spa> (MIT License)
 
 function md(s) {
