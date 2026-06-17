@@ -471,10 +471,12 @@
 
     /* Mono light: accent is a dark grey, which disappears against the dark
        hero image/overlay. Inside .hero-bg treat it as a dark context and
-       use a light grey so the shimmer + accent stay readable. */
+       use a light grey so the shimmer + accent stay readable. Flip --accent-fg
+       dark too, or a .cta-btn.primary in the hero renders light-on-light. */
     .scheme-mono:not(.dark) .hero-bg {
         --accent: oklch(90% 0 0);
         --accent-hover: oklch(95% 0 0);
+        --accent-fg: oklch(22% 0 0);
     }
 
     .hero-bg > * {
