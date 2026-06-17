@@ -88,8 +88,8 @@ interactions:
     trigger: "window scroll (passive)"
     effect: "toggle body.scrolled when scrollY > 0"
   scroll-reveal:
-    trigger: "window scroll (passive)"
-    effect: "add .active to .reveal elements whose top is within viewportHeight − 100px; one-way, never removed"
+    trigger: "IntersectionObserver (single observer; rootMargin 0px 0px -8% 0px)"
+    effect: "elements already in view at load get .active + .reveal-instant (snap visible, no animation); the rest get .active one-way as they scroll into view, then are unobserved. No-IntersectionObserver fallback: all get .active immediately"
   system-theme-change:
     trigger: "matchMedia('(prefers-color-scheme: dark)') change"
     effect: "if no explicit user theme persisted, swap html.dark ↔ html.light to match OS"
@@ -159,7 +159,7 @@ All persisted state lives in `localStorage['base-state']` as a JSON object. The 
 Non-persisted state (ephemeral, recomputed on init):
 
 - Dropdown `.open` class.
-- Scroll-reveal `.active` class (recomputed from scroll position).
+- Scroll-reveal `.active` class (set once per element via IntersectionObserver; one-way).
 - Topnav `.scrolled` class on body.
 - Lucide icon DOM nodes (re-rendered from `data-lucide` attributes).
 - Hover, focus, pressed visual states (pure CSS).
@@ -204,7 +204,7 @@ Runs on `DOMContentLoaded` (or immediately if `readyState !== 'loading'`). Order
 
 ### Phase 3 — `Site.init()` (optional, marketing layer)
 
-Runs independently on `DOMContentLoaded`. Injects 20 particle elements with randomized left/delay/duration, attaches passive scroll listener for reveal elements, sets current year in `#year`. Has no dependency on `Base`.
+Runs independently on `DOMContentLoaded`. Injects 20 particle elements with randomized left/delay/duration, sets up an IntersectionObserver for reveal elements (snapping above-the-fold ones visible instantly), sets current year in `#year`. Has no dependency on `Base`.
 
 The `requestAnimationFrame` in step 9 is load-bearing: it guarantees transitions are enabled *after* the final layout from `restore()` commits, so nothing animates during restore.
 
@@ -269,7 +269,7 @@ Fixed-position glassmorphic bar. Gains `body.scrolled` class the moment `scrollY
 
 ### Reveal (site.js)
 
-Elements with class `.reveal` start at `opacity: 0` and `translateY(100px) scale(0.95)`. On scroll, any whose `getBoundingClientRect().top` is less than `innerHeight - 100` get `.active`, triggering a 500ms transition to rest. One-way — never removed even if scrolled off-screen. Also runs once on init to catch above-the-fold elements.
+Elements with class `.reveal` start at `opacity: 0` and `translateY(100px) scale(0.95)`. At init, any already in view (`getBoundingClientRect().top < innerHeight`) get `.active` **and** `.reveal-instant`, so they snap to rest with no slide-up — no load-time animation. The rest are watched by a single `IntersectionObserver` (`rootMargin: 0px 0px -8% 0px`) and get `.active` one-way the moment they scroll into view, triggering the 500ms transition; each is then unobserved. One-way — never removed even if scrolled off-screen. If `IntersectionObserver` is unavailable, all elements get `.active` immediately.
 
 ### Particles (site.js)
 

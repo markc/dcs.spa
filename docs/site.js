@@ -32,22 +32,29 @@ const Site = {
     // SCROLL REVEAL ANIMATION
     // ============================================
 
+    // Reveal-on-scroll: snap whatever is already on screen at load visible (no
+    // slide-up), then animate a section one-way only as it scrolls into view.
+    // (The old version animated everything already visible at load and re-fired on
+    // every scroll / layout reflow.)
     initScrollReveal() {
-        const revealElements = document.querySelectorAll(".reveal");
-        if (revealElements.length === 0) return;
-
-        const revealOnScroll = () => {
-            revealElements.forEach(el => {
-                const elementTop = el.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                if (elementTop < windowHeight - 100) {
-                    el.classList.add("active");
-                }
+        const els = document.querySelectorAll(".reveal");
+        if (els.length === 0) return;
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        // Already in view at load → snap visible, no animation.
+        els.forEach(el => {
+            if (el.getBoundingClientRect().top < vh) el.classList.add("active", "reveal-instant");
+        });
+        if (!("IntersectionObserver" in window)) {
+            els.forEach(el => el.classList.add("active"));
+            return;
+        }
+        // The rest animate one-way, only as they scroll into view.
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(en => {
+                if (en.isIntersecting) { en.target.classList.add("active"); io.unobserve(en.target); }
             });
-        };
-
-        window.addEventListener("scroll", revealOnScroll, { passive: true });
-        revealOnScroll();
+        }, { rootMargin: "0px 0px -8% 0px" });
+        els.forEach(el => { if (!el.classList.contains("active")) io.observe(el); });
     },
 
     // ============================================

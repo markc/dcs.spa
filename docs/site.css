@@ -961,6 +961,11 @@
         transition: opacity var(--transition-long), transform var(--transition-long);
     }
 
+    /* Anything already on screen at load is snapped visible with no slide-up
+       (initScrollReveal adds .reveal-instant); only sections scrolled into view
+       afterwards animate. */
+    .reveal.reveal-instant { transition: none !important; }
+
     .reveal.active {
         opacity: 1;
         transform: translateY(0) scale(1);

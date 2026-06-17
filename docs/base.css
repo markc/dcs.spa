@@ -388,11 +388,24 @@
         .sidebar-width-controls { flex-direction: column; gap: var(--space-2); }
         .scheme-item { justify-content: center; padding: var(--space-2); }
         .scheme-name { display: none; }
+        /* The rules above already stack the toggles + Left/Right width inputs into a
+           full-width column, so they share the same full width as the colour-swatch
+           rows below. Just tighten the section padding + carousel-nav gap. */
+        .appearance-section { padding: var(--space-3); }
+        .carousel-nav { gap: var(--space-2); }
     }
 
     .sidebar-left { width: var(--sw-l); left: 0; transform: translateX(-100%); }
     .sidebar-right { width: var(--sw-r); right: 0; transform: translateX(100%); }
     .sidebar.open { transform: translateX(0); }
+
+    /* A .panel is a flex item with the default min-width:auto (= min-content), so at
+       a small right-sidebar width its content forced it WIDER than the sidebar and the
+       Appearance widgets spilled off the right edge. min-width:0 lets it shrink to
+       the sidebar width; clip any residual horizontal overflow. (Right only — the
+       left nav is allowed to overflow into content at very narrow widths.) */
+    .sidebar-right .panel { min-width: 0; }
+    .sidebar-right .panel-content { overflow-x: hidden; }
 
     /* Sidebar inner border via ::after — animates from below topnav to top on scroll */
     .sidebar-left::after,
