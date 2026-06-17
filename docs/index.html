@@ -42,126 +42,6 @@
     <div class="panel-viewport">
         <div class="panel-track">
             <div class="panel">
-                <div class="panel-title">Tour</div>
-                <div class="panel-content panel-content-flush">
-                    <div class="deck" tabindex="0" aria-label="DCS feature tour">
-                        <div class="deck-header">
-                            <button class="deck-btn" data-deck-dir="prev" aria-label="Previous slide">
-                                <i data-lucide="chevron-left"></i>
-                            </button>
-                            <div class="deck-counter" aria-live="polite">
-                                <span class="deck-current">01</span><span class="deck-sep">/</span><span class="deck-total">06</span>
-                            </div>
-                            <button class="deck-btn" data-deck-dir="next" aria-label="Next slide">
-                                <i data-lucide="chevron-right"></i>
-                            </button>
-                        </div>
-                        <div class="deck-progress"><div class="deck-progress-bar"></div></div>
-                        <div class="deck-viewport">
-                            <div class="deck-track">
-
-                                <article class="deck-slide active" data-deck-slide="0">
-                                    <div class="deck-num" aria-hidden="true">01</div>
-                                    <div class="deck-kicker">The Problem</div>
-                                    <h3 class="deck-title">Your content is narrow.<br>Your screen is wide.</h3>
-                                    <p class="deck-body">Traditional layouts waste the flanks or stuff every control into a single scrolling column. <strong>DCS</strong> turns ambient whitespace into two independent UI surfaces &mdash; navigation on the left, controls on the right &mdash; without stealing pixels from the story.</p>
-                                    <div class="deck-figure">
-                                        <div class="deck-figure-row">
-                                            <span class="deck-pill">wasted</span><span class="deck-pill deck-pill-solid">content</span><span class="deck-pill">wasted</span>
-                                        </div>
-                                        <div class="deck-figure-arrow" aria-hidden="true">&darr;</div>
-                                        <div class="deck-figure-row">
-                                            <span class="deck-pill deck-pill-accent">nav</span><span class="deck-pill deck-pill-solid">content</span><span class="deck-pill deck-pill-accent">controls</span>
-                                        </div>
-                                    </div>
-                                </article>
-
-                                <article class="deck-slide" data-deck-slide="1">
-                                    <div class="deck-num" aria-hidden="true">02</div>
-                                    <div class="deck-kicker">The Pattern</div>
-                                    <h3 class="deck-title">One sidebar.<br>Many panels.<br>Zero clutter.</h3>
-                                    <p class="deck-body">Each sidebar holds a horizontal carousel of panels. Chevrons and dots cycle through them without leaving the column. Unlimited surfaces, constant footprint &mdash; the one you are reading right now sits <em>inside</em> a panel that lives <em>inside</em> a carousel.</p>
-                                    <div class="deck-chiplist" aria-hidden="true">
-                                        <span class="deck-chip deck-chip-active">Tour</span>
-                                        <span class="deck-chip-arrow">&rsaquo;</span>
-                                        <span class="deck-chip">Nav</span>
-                                        <span class="deck-chip-arrow">&rsaquo;</span>
-                                        <span class="deck-chip">About</span>
-                                        <span class="deck-chip-arrow">&rsaquo;</span>
-                                        <span class="deck-chip">Docs</span>
-                                    </div>
-                                </article>
-
-                                <article class="deck-slide" data-deck-slide="2">
-                                    <div class="deck-num" aria-hidden="true">03</div>
-                                    <div class="deck-kicker">Mobile&#8209;First</div>
-                                    <h3 class="deck-title">100% viewport.<br>Transform&#8209;based.<br>Buttery smooth.</h3>
-                                    <p class="deck-body">Below 1280&thinsp;px, sidebars live off&#8209;screen at full width. A hamburger reveals them via <code>transform</code> &mdash; GPU&#8209;accelerated, no reflow, no drawer library. Tap outside to dismiss.</p>
-                                    <pre class="deck-code"><code><span class="tk-s">.sidebar</span> <span class="tk-p">{</span>
-  <span class="tk-k">transform</span>: <span class="tk-v">translateX(-100%)</span>;
-  <span class="tk-k">transition</span>: <span class="tk-v">transform 300ms</span>;
-<span class="tk-p">}</span>
-<span class="tk-s">.sidebar.open</span> <span class="tk-p">{</span>
-  <span class="tk-k">transform</span>: <span class="tk-v">translateX(0)</span>;
-<span class="tk-p">}</span></code></pre>
-                                </article>
-
-                                <article class="deck-slide" data-deck-slide="3">
-                                    <div class="deck-num" aria-hidden="true">04</div>
-                                    <div class="deck-kicker">Desktop</div>
-                                    <h3 class="deck-title">Pinned.<br>Persistent.<br>Asymmetric by default.</h3>
-                                    <p class="deck-body">At 1280&thinsp;px+, sidebars pin as columns. Content receives <code>margin&#8209;inline</code> &mdash; it reflows cleanly instead of being overlapped. Each side pins independently, so asymmetric layouts fall out for free.</p>
-                                    <div class="deck-stat">
-                                        <div class="deck-stat-value">10&ndash;100%</div>
-                                        <div class="deck-stat-label">user&#8209;adjustable width per side</div>
-                                    </div>
-                                </article>
-
-                                <article class="deck-slide" data-deck-slide="4">
-                                    <div class="deck-num" aria-hidden="true">05</div>
-                                    <div class="deck-kicker">Motion</div>
-                                    <h3 class="deck-title">Slide for space.<br>Fade for focus.</h3>
-                                    <p class="deck-body">Panels transition by sliding (physical &mdash; they move past you) or fading (semantic &mdash; they dissolve in place). Toggle live from the Appearance panel on the right and watch the difference between a spatial model and a content&#8209;parity one.</p>
-                                    <div class="deck-compare">
-                                        <div class="deck-compare-cell">
-                                            <div class="deck-compare-label">slide</div>
-                                            <div class="deck-compare-demo deck-compare-slide"><span></span><span></span><span></span></div>
-                                        </div>
-                                        <div class="deck-compare-cell">
-                                            <div class="deck-compare-label">fade</div>
-                                            <div class="deck-compare-demo deck-compare-fade"><span></span><span></span><span></span></div>
-                                        </div>
-                                    </div>
-                                </article>
-
-                                <article class="deck-slide" data-deck-slide="5">
-                                    <div class="deck-num" aria-hidden="true">06</div>
-                                    <div class="deck-kicker">Persistence</div>
-                                    <h3 class="deck-title">Pick it up<br>where you left it.</h3>
-                                    <p class="deck-body">Theme, scheme, pin state, active panel &mdash; all survive reloads via a single <code>localStorage</code> key. An inline pre&#8209;script paints the correct state before the first frame. Zero flash. Zero dependencies. Zero build step.</p>
-                                    <div class="deck-stack">
-                                        <div class="deck-stack-row"><span class="deck-stack-k">theme</span><span class="deck-stack-v">dark</span></div>
-                                        <div class="deck-stack-row"><span class="deck-stack-k">scheme</span><span class="deck-stack-v">ocean</span></div>
-                                        <div class="deck-stack-row"><span class="deck-stack-k">pinLeft</span><span class="deck-stack-v">true</span></div>
-                                        <div class="deck-stack-row"><span class="deck-stack-k">panelLeft</span><span class="deck-stack-v">0</span></div>
-                                        <div class="deck-stack-row"><span class="deck-stack-k">carousel</span><span class="deck-stack-v">slide</span></div>
-                                    </div>
-                                </article>
-
-                            </div>
-                        </div>
-                        <div class="deck-dots" role="tablist" aria-label="Slide indicators">
-                            <button class="deck-dot active" data-deck-goto="0" aria-label="Slide 1"></button>
-                            <button class="deck-dot" data-deck-goto="1" aria-label="Slide 2"></button>
-                            <button class="deck-dot" data-deck-goto="2" aria-label="Slide 3"></button>
-                            <button class="deck-dot" data-deck-goto="3" aria-label="Slide 4"></button>
-                            <button class="deck-dot" data-deck-goto="4" aria-label="Slide 5"></button>
-                            <button class="deck-dot" data-deck-goto="5" aria-label="Slide 6"></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel">
                 <div class="panel-title">Navigation</div>
                 <div class="panel-content">
                     <nav>
@@ -316,6 +196,126 @@
                                     <span>site.js</span>
                                 </span>
                             </div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-title">Tour</div>
+                <div class="panel-content panel-content-flush">
+                    <div class="deck" tabindex="0" aria-label="DCS feature tour">
+                        <div class="deck-header">
+                            <button class="deck-btn" data-deck-dir="prev" aria-label="Previous slide">
+                                <i data-lucide="chevron-left"></i>
+                            </button>
+                            <div class="deck-counter" aria-live="polite">
+                                <span class="deck-current">01</span><span class="deck-sep">/</span><span class="deck-total">06</span>
+                            </div>
+                            <button class="deck-btn" data-deck-dir="next" aria-label="Next slide">
+                                <i data-lucide="chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="deck-progress"><div class="deck-progress-bar"></div></div>
+                        <div class="deck-viewport">
+                            <div class="deck-track">
+
+                                <article class="deck-slide active" data-deck-slide="0">
+                                    <div class="deck-num" aria-hidden="true">01</div>
+                                    <div class="deck-kicker">The Problem</div>
+                                    <h3 class="deck-title">Your content is narrow.<br>Your screen is wide.</h3>
+                                    <p class="deck-body">Traditional layouts waste the flanks or stuff every control into a single scrolling column. <strong>DCS</strong> turns ambient whitespace into two independent UI surfaces &mdash; navigation on the left, controls on the right &mdash; without stealing pixels from the story.</p>
+                                    <div class="deck-figure">
+                                        <div class="deck-figure-row">
+                                            <span class="deck-pill">wasted</span><span class="deck-pill deck-pill-solid">content</span><span class="deck-pill">wasted</span>
+                                        </div>
+                                        <div class="deck-figure-arrow" aria-hidden="true">&darr;</div>
+                                        <div class="deck-figure-row">
+                                            <span class="deck-pill deck-pill-accent">nav</span><span class="deck-pill deck-pill-solid">content</span><span class="deck-pill deck-pill-accent">controls</span>
+                                        </div>
+                                    </div>
+                                </article>
+
+                                <article class="deck-slide" data-deck-slide="1">
+                                    <div class="deck-num" aria-hidden="true">02</div>
+                                    <div class="deck-kicker">The Pattern</div>
+                                    <h3 class="deck-title">One sidebar.<br>Many panels.<br>Zero clutter.</h3>
+                                    <p class="deck-body">Each sidebar holds a horizontal carousel of panels. Chevrons and dots cycle through them without leaving the column. Unlimited surfaces, constant footprint &mdash; the one you are reading right now sits <em>inside</em> a panel that lives <em>inside</em> a carousel.</p>
+                                    <div class="deck-chiplist" aria-hidden="true">
+                                        <span class="deck-chip deck-chip-active">Tour</span>
+                                        <span class="deck-chip-arrow">&rsaquo;</span>
+                                        <span class="deck-chip">Nav</span>
+                                        <span class="deck-chip-arrow">&rsaquo;</span>
+                                        <span class="deck-chip">About</span>
+                                        <span class="deck-chip-arrow">&rsaquo;</span>
+                                        <span class="deck-chip">Docs</span>
+                                    </div>
+                                </article>
+
+                                <article class="deck-slide" data-deck-slide="2">
+                                    <div class="deck-num" aria-hidden="true">03</div>
+                                    <div class="deck-kicker">Mobile&#8209;First</div>
+                                    <h3 class="deck-title">100% viewport.<br>Transform&#8209;based.<br>Buttery smooth.</h3>
+                                    <p class="deck-body">Below 1280&thinsp;px, sidebars live off&#8209;screen at full width. A hamburger reveals them via <code>transform</code> &mdash; GPU&#8209;accelerated, no reflow, no drawer library. Tap outside to dismiss.</p>
+                                    <pre class="deck-code"><code><span class="tk-s">.sidebar</span> <span class="tk-p">{</span>
+  <span class="tk-k">transform</span>: <span class="tk-v">translateX(-100%)</span>;
+  <span class="tk-k">transition</span>: <span class="tk-v">transform 300ms</span>;
+<span class="tk-p">}</span>
+<span class="tk-s">.sidebar.open</span> <span class="tk-p">{</span>
+  <span class="tk-k">transform</span>: <span class="tk-v">translateX(0)</span>;
+<span class="tk-p">}</span></code></pre>
+                                </article>
+
+                                <article class="deck-slide" data-deck-slide="3">
+                                    <div class="deck-num" aria-hidden="true">04</div>
+                                    <div class="deck-kicker">Desktop</div>
+                                    <h3 class="deck-title">Pinned.<br>Persistent.<br>Asymmetric by default.</h3>
+                                    <p class="deck-body">At 1280&thinsp;px+, sidebars pin as columns. Content receives <code>margin&#8209;inline</code> &mdash; it reflows cleanly instead of being overlapped. Each side pins independently, so asymmetric layouts fall out for free.</p>
+                                    <div class="deck-stat">
+                                        <div class="deck-stat-value">10&ndash;100%</div>
+                                        <div class="deck-stat-label">user&#8209;adjustable width per side</div>
+                                    </div>
+                                </article>
+
+                                <article class="deck-slide" data-deck-slide="4">
+                                    <div class="deck-num" aria-hidden="true">05</div>
+                                    <div class="deck-kicker">Motion</div>
+                                    <h3 class="deck-title">Slide for space.<br>Fade for focus.</h3>
+                                    <p class="deck-body">Panels transition by sliding (physical &mdash; they move past you) or fading (semantic &mdash; they dissolve in place). Toggle live from the Appearance panel on the right and watch the difference between a spatial model and a content&#8209;parity one.</p>
+                                    <div class="deck-compare">
+                                        <div class="deck-compare-cell">
+                                            <div class="deck-compare-label">slide</div>
+                                            <div class="deck-compare-demo deck-compare-slide"><span></span><span></span><span></span></div>
+                                        </div>
+                                        <div class="deck-compare-cell">
+                                            <div class="deck-compare-label">fade</div>
+                                            <div class="deck-compare-demo deck-compare-fade"><span></span><span></span><span></span></div>
+                                        </div>
+                                    </div>
+                                </article>
+
+                                <article class="deck-slide" data-deck-slide="5">
+                                    <div class="deck-num" aria-hidden="true">06</div>
+                                    <div class="deck-kicker">Persistence</div>
+                                    <h3 class="deck-title">Pick it up<br>where you left it.</h3>
+                                    <p class="deck-body">Theme, scheme, pin state, active panel &mdash; all survive reloads via a single <code>localStorage</code> key. An inline pre&#8209;script paints the correct state before the first frame. Zero flash. Zero dependencies. Zero build step.</p>
+                                    <div class="deck-stack">
+                                        <div class="deck-stack-row"><span class="deck-stack-k">theme</span><span class="deck-stack-v">dark</span></div>
+                                        <div class="deck-stack-row"><span class="deck-stack-k">scheme</span><span class="deck-stack-v">ocean</span></div>
+                                        <div class="deck-stack-row"><span class="deck-stack-k">pinLeft</span><span class="deck-stack-v">true</span></div>
+                                        <div class="deck-stack-row"><span class="deck-stack-k">panelLeft</span><span class="deck-stack-v">0</span></div>
+                                        <div class="deck-stack-row"><span class="deck-stack-k">carousel</span><span class="deck-stack-v">slide</span></div>
+                                    </div>
+                                </article>
+
+                            </div>
+                        </div>
+                        <div class="deck-dots" role="tablist" aria-label="Slide indicators">
+                            <button class="deck-dot active" data-deck-goto="0" aria-label="Slide 1"></button>
+                            <button class="deck-dot" data-deck-goto="1" aria-label="Slide 2"></button>
+                            <button class="deck-dot" data-deck-goto="2" aria-label="Slide 3"></button>
+                            <button class="deck-dot" data-deck-goto="3" aria-label="Slide 4"></button>
+                            <button class="deck-dot" data-deck-goto="4" aria-label="Slide 5"></button>
+                            <button class="deck-dot" data-deck-goto="5" aria-label="Slide 6"></button>
                         </div>
                     </div>
                 </div>
