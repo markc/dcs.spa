@@ -753,44 +753,35 @@
         font-weight: bold;
     }
 
-    /* "6 Color Schemes" cards — a live preview tile per card showing THAT scheme's
-       actual bg / fg / accent for the current light or dark mode, independent of the
-       active scheme. Per-scheme values mirror the .scheme-* blocks above. */
-    .scheme-sw {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--space-3);
-        margin-block: var(--space-3) var(--space-4);
-        padding: var(--space-3) var(--space-4);
-        border-radius: var(--radius-lg);
-        border: 1px solid color-mix(in oklch, var(--sw-fg) 18%, transparent);
-        background: var(--sw-bg);
-        color: var(--sw-fg);
-    }
-    .scheme-sw-aa { font-size: var(--text-lg); font-weight: 700; letter-spacing: 0.02em; }
-    .scheme-sw-dot {
-        width: 1.5rem; height: 1.5rem; flex-shrink: 0;
-        border-radius: var(--radius-full);
-        background: var(--sw-ac);
-        box-shadow: 0 0 0 1px color-mix(in oklch, var(--sw-fg) 15%, transparent);
+    /* "6 Color Schemes" cards — each card IS its scheme: bg = scheme bg, text =
+       scheme fg, icon + hover top-border + checkmarks = scheme accent. Theme-aware
+       (light/dark). The card's own rules already read --glass / --accent / --fg-*,
+       so we just remap those from the per-scheme --sw-* tokens below. Values mirror
+       the .scheme-* blocks above. */
+    .service-card[data-scheme] {
+        --glass: var(--sw-bg);
+        --glass-border: color-mix(in oklch, var(--sw-fg) 14%, transparent);
+        --accent: var(--sw-ac);
+        --accent-glow: color-mix(in oklch, var(--sw-ac) 30%, transparent);
+        --fg-primary: var(--sw-fg);
+        --fg-secondary: color-mix(in oklch, var(--sw-fg) 68%, var(--sw-bg));
     }
 
-    /* per-scheme preview colours — light */
-    .scheme-sw[data-scheme="ocean"]   { --sw-bg: oklch(98% 0.008 220); --sw-fg: oklch(25% 0.06 220); --sw-ac: oklch(55% 0.12 220); }
-    .scheme-sw[data-scheme="crimson"] { --sw-bg: oklch(98% 0.008 25);  --sw-fg: oklch(25% 0.04 25);  --sw-ac: oklch(47% 0.2 25); }
-    .scheme-sw[data-scheme="stone"]   { --sw-bg: oklch(98% 0.005 60);  --sw-fg: oklch(25% 0.02 60);  --sw-ac: oklch(45% 0.05 60); }
-    .scheme-sw[data-scheme="forest"]  { --sw-bg: oklch(98% 0.008 150); --sw-fg: oklch(25% 0.06 150); --sw-ac: oklch(50% 0.12 150); }
-    .scheme-sw[data-scheme="sunset"]  { --sw-bg: oklch(98% 0.01 45);   --sw-fg: oklch(30% 0.08 45);  --sw-ac: oklch(60% 0.16 45); }
-    .scheme-sw[data-scheme="mono"]    { --sw-bg: oklch(98% 0 0);       --sw-fg: oklch(20% 0 0);      --sw-ac: oklch(25% 0 0); }
+    /* per-scheme colours — light */
+    .service-card[data-scheme="ocean"]   { --sw-bg: oklch(98% 0.008 220); --sw-fg: oklch(25% 0.06 220); --sw-ac: oklch(55% 0.12 220); }
+    .service-card[data-scheme="crimson"] { --sw-bg: oklch(98% 0.008 25);  --sw-fg: oklch(25% 0.04 25);  --sw-ac: oklch(47% 0.2 25); }
+    .service-card[data-scheme="stone"]   { --sw-bg: oklch(98% 0.005 60);  --sw-fg: oklch(25% 0.02 60);  --sw-ac: oklch(45% 0.05 60); }
+    .service-card[data-scheme="forest"]  { --sw-bg: oklch(98% 0.008 150); --sw-fg: oklch(25% 0.06 150); --sw-ac: oklch(50% 0.12 150); }
+    .service-card[data-scheme="sunset"]  { --sw-bg: oklch(98% 0.01 45);   --sw-fg: oklch(30% 0.08 45);  --sw-ac: oklch(60% 0.16 45); }
+    .service-card[data-scheme="mono"]    { --sw-bg: oklch(98% 0 0);       --sw-fg: oklch(20% 0 0);      --sw-ac: oklch(25% 0 0); }
 
-    /* per-scheme preview colours — dark */
-    html.dark .scheme-sw[data-scheme="ocean"]   { --sw-bg: oklch(12% 0.015 220); --sw-fg: oklch(95% 0.02 220); --sw-ac: oklch(75% 0.12 220); }
-    html.dark .scheme-sw[data-scheme="crimson"] { --sw-bg: oklch(10% 0.015 25);  --sw-fg: oklch(95% 0.02 25);  --sw-ac: oklch(54% 0.23 25); }
-    html.dark .scheme-sw[data-scheme="stone"]   { --sw-bg: oklch(12% 0.01 60);   --sw-fg: oklch(95% 0.01 60);  --sw-ac: oklch(80% 0.03 60); }
-    html.dark .scheme-sw[data-scheme="forest"]  { --sw-bg: oklch(12% 0.015 150); --sw-fg: oklch(95% 0.02 150); --sw-ac: oklch(70% 0.12 150); }
-    html.dark .scheme-sw[data-scheme="sunset"]  { --sw-bg: oklch(12% 0.02 45);   --sw-fg: oklch(95% 0.025 45); --sw-ac: oklch(72% 0.14 45); }
-    html.dark .scheme-sw[data-scheme="mono"]    { --sw-bg: oklch(10% 0 0);       --sw-fg: oklch(95% 0 0);      --sw-ac: oklch(85% 0 0); }
+    /* per-scheme colours — dark */
+    html.dark .service-card[data-scheme="ocean"]   { --sw-bg: oklch(12% 0.015 220); --sw-fg: oklch(95% 0.02 220); --sw-ac: oklch(75% 0.12 220); }
+    html.dark .service-card[data-scheme="crimson"] { --sw-bg: oklch(10% 0.015 25);  --sw-fg: oklch(95% 0.02 25);  --sw-ac: oklch(54% 0.23 25); }
+    html.dark .service-card[data-scheme="stone"]   { --sw-bg: oklch(12% 0.01 60);   --sw-fg: oklch(95% 0.01 60);  --sw-ac: oklch(80% 0.03 60); }
+    html.dark .service-card[data-scheme="forest"]  { --sw-bg: oklch(12% 0.015 150); --sw-fg: oklch(95% 0.02 150); --sw-ac: oklch(70% 0.12 150); }
+    html.dark .service-card[data-scheme="sunset"]  { --sw-bg: oklch(12% 0.02 45);   --sw-fg: oklch(95% 0.025 45); --sw-ac: oklch(72% 0.14 45); }
+    html.dark .service-card[data-scheme="mono"]    { --sw-bg: oklch(10% 0 0);       --sw-fg: oklch(95% 0 0);      --sw-ac: oklch(85% 0 0); }
 
     .services-grid-2col { grid-template-columns: 1fr; }
 
