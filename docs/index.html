@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="site.css">
     <script src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.min.js"></script>
-    <script>(function(){var s=JSON.parse(localStorage.getItem('base-state')||'{}'),t=s.theme,c=s.scheme,h=document.documentElement;h.className='preload '+(t||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'))+(c&&c!=='default'?' scheme-'+c:'');})()</script>
+    <script>(function(){var s=JSON.parse(localStorage.getItem('base-state')||'{}'),t=s.theme,c=s.scheme,h=document.documentElement;h.className='preload '+(t||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'))+(c&&c!=='default'?' scheme-'+c:'')+(s.width==='wide'?' wide':(s.width==='narrow'?' narrow':''));})()</script>
 </head>
 <body>
 <div class="particles" id="particles"></div>
@@ -349,6 +349,11 @@
                         <div class="toggle-group">
                             <button class="toggle-btn" data-carousel="slide">Slide</button>
                             <button class="toggle-btn" data-carousel="fade">Fade</button>
+                        </div>
+                        <div class="toggle-group">
+                            <button class="toggle-btn" data-width="narrow">Narrow</button>
+                            <button class="toggle-btn" data-width="normal">Normal</button>
+                            <button class="toggle-btn" data-width="wide">Wide</button>
                         </div>
                         <div class="sidebar-width-controls">
                             <div class="sidebar-width-control">

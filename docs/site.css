@@ -30,11 +30,6 @@
         --text-5xl: clamp(2rem, 1rem + 4vw, 3.5rem);
         --text-6xl: clamp(2.5rem, 1rem + 5vw, 4.5rem);
 
-        /* Extended border radius */
-        --radius-xl: 16px;
-        --radius-2xl: 24px;
-        --radius-full: 9999px;
-
         /* Container widths */
         --container-xl: 1280px;
 
@@ -669,7 +664,7 @@
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid var(--glass-border);
         padding: var(--space-6);
-        border-radius: var(--radius-lg);
+        border-radius: var(--radius-xl);
         position: relative;
         overflow: hidden;
         /* Initial transparent shadow for smooth transition */
@@ -762,7 +757,7 @@
     .pricing-table {
         background: var(--glass);
         border: 1px solid var(--glass-border);
-        border-radius: var(--radius-lg);
+        border-radius: var(--radius-xl);
         overflow: hidden;
     }
 
@@ -1100,7 +1095,7 @@
         align-items: center;
         justify-content: center;
         border: 1px solid var(--border);
-        border-radius: 999px;
+        border-radius: var(--radius-full);
         background: var(--bg-primary);
         color: var(--fg-secondary);
         cursor: pointer;
@@ -1301,7 +1296,7 @@
     .deck-chip {
         font-size: 0.7rem;
         padding: 0.25rem 0.5rem;
-        border-radius: 999px;
+        border-radius: var(--radius-full);
         background: var(--bg-tertiary);
         color: var(--fg-muted);
         border: 1px solid var(--border);
@@ -1446,7 +1441,7 @@
     .deck-dot {
         width: 6px;
         height: 6px;
-        border-radius: 999px;
+        border-radius: var(--radius-full);
         background: var(--border);
         border: none;
         padding: 0;

@@ -18,7 +18,7 @@
         --text-xl: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
         --text-2xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);
 
-        /* Spacing scale - 0-8 only */
+        /* Spacing scale - complete .25rem grid (0-24) */
         --space-0: 0;
         --space-1: 0.25rem;
         --space-2: 0.5rem;
@@ -26,7 +26,14 @@
         --space-4: 1rem;
         --space-5: 1.25rem;
         --space-6: 1.5rem;
+        --space-7: 1.75rem;
         --space-8: 2rem;
+        --space-9: 2.25rem;
+        --space-10: 2.5rem;
+        --space-12: 3rem;
+        --space-16: 4rem;
+        --space-20: 5rem;
+        --space-24: 6rem;
 
         /* Container & layout */
         --container-lg: 960px;
@@ -35,11 +42,18 @@
         --sidebar-width-right: 20%;
         --sw-l: clamp(10%, var(--sidebar-width-left), 100%);
         --sw-r: clamp(10%, var(--sidebar-width-right), 100%);
+        /* Shared control height — unifies the Appearance-panel toggles, scheme
+           rows and width spinners to one consistent height. */
+        --ctl-h: 2.25rem;
 
-        /* Border radius - sm/md/lg */
+        /* Border radius - full scale (sm/md/lg/xl/2xl/full) so the base layer is
+           self-contained (cards/popovers use xl, pills use full). */
         --radius-sm: 4px;
         --radius-md: 6px;
         --radius-lg: 8px;
+        --radius-xl: 16px;
+        --radius-2xl: 24px;
+        --radius-full: 9999px;
 
         /* Shadows - sm/md/lg */
         --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -158,6 +172,11 @@
 @layer components {
     /* Container */
     .container { width: 100%; max-width: var(--container-lg); margin-inline: auto; padding-inline: 0; }
+    /* Content-width toggle (Appearance panel): narrow = 75% of the default, wide = no
+       cap; normal = the --container-lg default (no class). Applied pre-paint via
+       html.narrow / html.wide so there's no flash. */
+    html.narrow .container { max-width: calc(var(--container-lg) * 0.75); }
+    html.wide .container { max-width: none; }
 
     /* Cards - Mobile: no radius/side borders, Desktop: full styling */
     .card {
@@ -171,7 +190,7 @@
     }
 
     @media (min-width: 768px) {
-        .card { border-radius: var(--radius-lg); border-inline: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+        .card { border-radius: var(--radius-xl); border-inline: 1px solid var(--border); box-shadow: var(--shadow-sm); }
     }
 
     .card-hover:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--hover-shadow); }
@@ -261,7 +280,7 @@
         padding-block: var(--space-1);
         background-color: var(--bg-primary);
         border: 1px solid var(--border);
-        border-radius: var(--radius-lg);
+        border-radius: var(--radius-xl);
         box-shadow: var(--shadow-lg);
         opacity: 0;
         visibility: hidden;
@@ -306,7 +325,7 @@
         color: var(--fg-secondary);
         background-color: var(--bg-secondary);
         border: 1px solid var(--border);
-        border-radius: 9999px;
+        border-radius: var(--radius-full);
         transition: background-color var(--transition-fast), border-color var(--transition-fast);
     }
 
@@ -330,7 +349,7 @@
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid var(--glass-border, var(--border));
-        border-radius: var(--radius-md);
+        border-radius: var(--radius-lg);
         transition: background-color var(--transition-fast), color var(--transition-fast);
     }
     .menu-toggle:hover { background: var(--bg-tertiary); color: var(--accent); }
@@ -384,14 +403,17 @@
        single column so controls stay readable and tappable. */
     @container (max-width: 230px) {
         .toggle-group { flex-direction: column; }
-        .toggle-btn { flex: 0 0 auto; }
+        .toggle-btn { flex: 0 0 auto; padding: var(--space-1) var(--space-2); }
         .sidebar-width-controls { flex-direction: column; gap: var(--space-2); }
+        /* let the "Left/Right Width %" labels wrap so they can't force a horizontal
+           scrollbar inside the narrow panel. */
+        .sidebar-width-control label { white-space: normal; }
         .scheme-item { justify-content: center; padding: var(--space-2); }
         .scheme-name { display: none; }
         /* The rules above already stack the toggles + Left/Right width inputs into a
            full-width column, so they share the same full width as the colour-swatch
            rows below. Just tighten the section padding + carousel-nav gap. */
-        .appearance-section { padding: var(--space-3); }
+        .appearance-section { padding: var(--space-2); }
         .carousel-nav { gap: var(--space-2); }
     }
 
@@ -504,7 +526,7 @@
 
     .carousel-dot {
         width: 9px; height: 9px;
-        border-radius: 9999px;
+        border-radius: var(--radius-full);
         background: var(--fg-muted);
         opacity: 0.4;
         cursor: pointer;
@@ -569,15 +591,23 @@
 
     .toggle-group {
         display: flex;
+        /* unify height with the other Appearance controls (--ctl-h) */
+        min-height: var(--ctl-h);
         border: 1px solid var(--border);
-        border-radius: var(--radius-md);
+        border-radius: var(--radius-lg);
         overflow: hidden;
         margin-block-end: var(--space-4);
     }
 
     .toggle-btn {
         flex: 1;
-        padding: var(--space-2) var(--space-4);
+        /* centre the label vertically so it stays centred as the button stretches
+           to fill the --ctl-h group height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-1) var(--space-4);
+        line-height: 1;
         font-size: var(--text-sm);
         font-weight: 600;
         color: var(--fg-muted);
@@ -600,7 +630,8 @@
         text-align: center; white-space: nowrap;
     }
     .sidebar-width-spinner {
-        width: 100%; padding: var(--space-2) var(--space-3);
+        /* --ctl-h governs the height; text-align centres the number, so no padding */
+        width: 100%; min-height: var(--ctl-h); padding: 0;
         font-variant-numeric: tabular-nums; text-align: center;
         appearance: textfield;
         -moz-appearance: textfield;
@@ -614,13 +645,16 @@
     .scheme-list { display: flex; flex-direction: column; gap: var(--space-1); }
     .scheme-item {
         display: flex; align-items: center; gap: var(--space-3);
-        padding: var(--space-3) var(--space-4);
+        /* same height as the other controls (--ctl-h); small vertical padding keeps the
+           natural height under --ctl-h so min-height governs and the row centres. */
+        min-height: var(--ctl-h);
+        padding: var(--space-1) var(--space-4);
         border: 2px solid transparent; border-radius: var(--radius-lg);
         cursor: pointer; transition: border-color var(--transition-fast), background var(--transition-fast);
     }
     .scheme-item:hover { background: var(--bg-tertiary); }
     .scheme-item.active { border-color: var(--accent); background: var(--accent-subtle); }
-    .scheme-dot { width: 1.5rem; height: 1.5rem; border-radius: 50%; flex-shrink: 0; }
+    .scheme-dot { width: 1.25rem; height: 1.25rem; border-radius: 50%; flex-shrink: 0; }
     .scheme-name { font-size: var(--text-base); font-weight: 500; color: var(--fg-primary); }
     .scheme-item.active .scheme-name { color: var(--accent); }
 

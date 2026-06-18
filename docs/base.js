@@ -54,6 +54,22 @@ const Base = {
         );
     },
 
+    // Content width: 'narrow' (~75% of normal — a tighter reading measure),
+    // 'normal' (the --container-lg default, no class), or 'wide' (drops the cap to
+    // fill the real estate). A deliberate user choice — surfaces may adopt wide-only
+    // layouts. Persisted; the pre-paint <head> script applies the class before first
+    // paint (no flash).
+    setWidth(mode) {
+        const m = (mode === 'narrow' || mode === 'wide') ? mode : 'normal';
+        const html = document.documentElement;
+        html.classList.toggle('narrow', m === 'narrow');
+        html.classList.toggle('wide', m === 'wide');
+        this.state({ width: m });
+        document.querySelectorAll('[data-width]').forEach(el =>
+            el.classList.toggle('active', el.dataset.width === m)
+        );
+    },
+
     // Toast notification
     toast(msg, type = 'success', ms = 3000) {
         document.querySelector('.toast')?.remove();
@@ -245,6 +261,13 @@ const Base = {
             el.classList.toggle('active', el.dataset.theme === theme)
         );
 
+        // Restore content-width toggle buttons (the narrow/wide class itself is applied
+        // pre-paint by the <head> script; this just marks the active button).
+        const width = (s.width === 'narrow' || s.width === 'wide') ? s.width : 'normal';
+        document.querySelectorAll('[data-width]').forEach(el =>
+            el.classList.toggle('active', el.dataset.width === width)
+        );
+
         ['left', 'right'].forEach(side => {
             const sb = document.querySelector(`.sidebar-${side}`);
             if (!sb) return;
@@ -305,6 +328,10 @@ const Base = {
             // Carousel mode buttons (Slide/Fade)
             const carouselBtn = t.closest('[data-carousel]');
             if (carouselBtn) { this.setCarouselMode(carouselBtn.dataset.carousel); return; }
+
+            // Content width buttons (Narrow/Normal/Wide)
+            const widthBtn = t.closest('[data-width]');
+            if (widthBtn) { this.setWidth(widthBtn.dataset.width); return; }
 
             // Scheme selector
             const scheme = t.closest('[data-scheme]');
