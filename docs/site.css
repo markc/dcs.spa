@@ -33,8 +33,10 @@
         /* Container widths */
         --container-xl: 1280px;
         /* Content column max-width — driven by the Appearance width toggle
-           (html.narrow / html.wide below); the content grids reference it. */
-        --content-max: var(--container-xl);
+           (html.narrow / html.wide below); the content grids reference it.
+           Matches the CMS reading column: 60rem default (--container-lg), 45rem
+           narrow — narrow is tight enough to bite inside a pinned content area. */
+        --content-max: var(--container-lg);
 
         /* Marketing tokens */
         --hero-bg: url('Server_Room_Dark.webp');
@@ -168,10 +170,11 @@
     html.light { --code-token-l: 46%; }
 
     /* Content-width toggle (Appearance panel): the marketing content grids cap at
-       --content-max (default --container-xl); narrow = 75%, wide = uncapped. Mirrors
-       base.css's html.narrow/.wide .container rules so both the framework container
-       and the marketing content respond to the toggle. */
-    html.narrow { --content-max: calc(var(--container-xl) * 0.75); }
+       --content-max (default --container-lg = 60rem); narrow = 75% (45rem, bites),
+       wide = uncapped. Same values as the CMS .cms-wrap reading column, so the toggle
+       behaves identically in both. (Like the CMS, normal and wide coincide when the
+       content area is already <= 60rem; narrow always visibly narrows.) */
+    html.narrow { --content-max: calc(var(--container-lg) * 0.75); }
     html.wide { --content-max: none; }
 
     /* ============================================
