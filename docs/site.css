@@ -372,9 +372,13 @@
        LAYOUT OVERRIDES - Edge-to-Edge Marketing
        ============================================ */
 
-    /* Remove main padding so sections go edge-to-edge */
+    /* Content-width column: the Appearance Narrow/Normal/Wide buttons drive
+       --content-max; main#content caps at it (margin-inline auto) so the whole content
+       column narrows/widens. The hero's fixed background still spans full-bleed. */
     main {
         padding: 0;
+        max-width: var(--content-max);
+        margin-inline: auto;
     }
 
     /* Overlay visible on mobile when sidebar open (base.css controls visibility) */
@@ -569,13 +573,9 @@
         justify-content: center;
     }
 
-    .bg-image-section::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: rgb(0 0 0 / 0.5);
-        z-index: 0;
-    }
+    /* No dark scrim: the background image is already darkened, and with the content
+       column capped (main max-width) a centered overlay block would read as a dark
+       rectangle on the full-bleed body image — so it's removed in both modes. */
 
     .bg-image-section > * {
         position: relative;
