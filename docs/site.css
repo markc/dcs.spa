@@ -21,9 +21,10 @@
            canonical base.css @layer tokens. site.css overrides a token only where this
            site genuinely differs; below is just the per-site marketing set. */
 
-        /* Content column max-width — driven by the Appearance width toggle
-           (html.narrow / html.wide below); the content grids reference it. */
-        --content-max: var(--container-lg);
+        /* Content-width column — Narrow/Normal/Wide drive this as a PROPORTION of the
+           area between the pinned sidebars (each section caps at it, centered), so the
+           whole mid content narrows/widens together, resolution-independent. */
+        --content-max: 75%;   /* normal */
 
         /* Marketing tokens (per-site: hero image path is site-relative) */
         --hero-bg: url('Server_Room_Dark.webp');
@@ -143,20 +144,12 @@
         --particle-opacity: 0.15;
     }
 
-    /* Content-width toggle (Appearance panel): the marketing content grids cap at
-       --content-max (default --container-lg = 60rem); narrow = 75% (45rem, bites),
-       wide = uncapped. Same values as the CMS .cms-wrap reading column, so the toggle
-       behaves identically in both. (Like the CMS, normal and wide coincide when the
-       content area is already <= 60rem; narrow always visibly narrows.) */
-    html.narrow { --content-max: calc(var(--container-lg) * 0.75); }
-    html.wide { --content-max: none; }
-
-    /* Also cap the generic .container wrapper. The --content-max grids above handle the
-       marketing sections; this keeps a plain .container-wrapped column in step. (Lives
-       in site.css, not the canonical base.css — width handling is per-instance: the CMS
-       does it in app.css, this brochure does it here.) */
-    html.narrow .container { max-width: calc(var(--container-lg) * 0.75); }
-    html.wide .container { max-width: none; }
+    /* Content-width toggle (Appearance panel): each section caps at --content-max, a
+       PROPORTION of the area between the pinned sidebars — narrow 50%, normal 75%, wide
+       100% — so the split is the same ratio at any resolution. Buttons set html.narrow /
+       html.wide (pre-paint, no flash); the cap only applies in the >=1280px pinned layout. */
+    html.narrow { --content-max: 50%; }
+    html.wide   { --content-max: 100%; }
 
     /* ============================================
        COLOR SCHEMES - Crimson, Stone, Forest, Sunset
@@ -384,9 +377,11 @@
        the available width and the two compose (content width = min(--content-max, the
        area between pinned sidebars)). The Appearance Narrow/Normal/Wide toggle drives
        --content-max; the hero's fixed background stays full-bleed. */
-    main > section {
-        max-width: var(--content-max);
-        margin-inline: auto;
+    @media (min-width: 1280px) {
+        main > section {
+            max-width: var(--content-max);
+            margin-inline: auto;
+        }
     }
 
     /* Overlay visible on mobile when sidebar open (base.css controls visibility) */
@@ -655,7 +650,7 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: var(--space-4);
-        max-width: var(--content-max);
+        max-width: none;
         margin-inline: auto;
     }
 
@@ -781,7 +776,7 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: var(--space-6);
-        max-width: var(--content-max);
+        max-width: none;
         margin-inline: auto;
     }
 
@@ -913,7 +908,7 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: var(--space-8);
-        max-width: var(--content-max);
+        max-width: none;
         margin-inline: auto;
     }
 
