@@ -457,17 +457,9 @@
         position: relative;
     }
 
-    .hero-bg::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: var(--hero-overlay, rgb(0 0 0 / 0.6));
-        z-index: 0;
-    }
-
-    html.light {
-        --hero-overlay: rgb(0 0 0 / 0.3);
-    }
+    /* No hero scrim: Server_Room_Dark.webp is already darkened (it bakes in its own
+       overlay), so a ::before scrim doubled it. The pre-darkened image carries the
+       white hero text on its own. */
 
     html.light .hero-bg p { color: #fff; }
 
