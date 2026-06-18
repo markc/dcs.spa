@@ -1,24 +1,39 @@
-/* Base CSS Framework - Mobile-First App Shell
+/* Base CSS Framework - Mobile-First App Shell  —  base.css v1.0.0
  * Modern, generic design system - override colors with site.css
  * Copyright © 2026 Mark Constable <mc@dcs.spa> (MIT License)
+ *
+ * CANONICAL — blind-copied to every clone; do NOT edit per-site (override tokens in
+ * site.css). Defines zero colours: site.css MUST supply the colour contract —
+ *   --bg-{primary,secondary,tertiary}, --fg-{primary,secondary,muted},
+ *   --accent{,-hover,-fg,-subtle,-glow}, --border{,-muted},
+ *   --success/--danger/--warning, --row-hover, --overlay,
+ *   --glass{,-border}, --nav-scrolled-bg
+ * — or the framework renders broken. The first line below establishes the full master
+ * @layer order before any rule loads; site.css fills site-*; an instance app layer
+ * (if any) is unlayered and loaded last. This file is the canonical pair's framework
+ * half; recolour/re-pad in site.css, not here.
  */
 
-@layer reset, tokens, base, components, utilities, animations;
+@layer reset, tokens, base, components, utilities, animations, site-tokens, site-components, site-utilities;
 
-/* === Design Tokens (~60 lines) === */
+/* === Design Tokens — the non-colour scales (defaults; a clone overrides in site.css) === */
 @layer tokens {
     :root {
         color-scheme: light dark;
 
-        /* Typography scale - 6 sizes */
+        /* Typography scale (app xs-2xl + marketing 3xl-6xl) */
         --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);
         --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
         --text-base: clamp(0.9rem, 0.85rem + 0.25vw, 1rem);
         --text-lg: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
         --text-xl: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
         --text-2xl: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+        --text-3xl: clamp(1.5rem, 1rem + 2vw, 2rem);
+        --text-4xl: clamp(1.75rem, 1rem + 3vw, 2.5rem);
+        --text-5xl: clamp(2rem, 1rem + 4vw, 3.5rem);
+        --text-6xl: clamp(2.5rem, 1rem + 5vw, 4.5rem);
 
-        /* Spacing scale - complete .25rem grid (0-24) */
+        /* Spacing scale - COMPLETE 0-24 (incl. --space-7 1.75rem, --space-9 2.25rem) */
         --space-0: 0;
         --space-1: 0.25rem;
         --space-2: 0.5rem;
@@ -35,19 +50,9 @@
         --space-20: 5rem;
         --space-24: 6rem;
 
-        /* Container & layout */
-        --container-lg: 960px;
-        --topnav-height: 4rem;
-        --sidebar-width-left: 20%;
-        --sidebar-width-right: 20%;
-        --sw-l: clamp(10%, var(--sidebar-width-left), 100%);
-        --sw-r: clamp(10%, var(--sidebar-width-right), 100%);
-        /* Shared control height — unifies the Appearance-panel toggles, scheme
-           rows and width spinners to one consistent height. */
-        --ctl-h: 2.25rem;
-
-        /* Border radius - full scale (sm/md/lg/xl/2xl/full) so the base layer is
-           self-contained (cards/popovers use xl, pills use full). */
+        /* Border radius - sm/md/lg + marketing xl/2xl/full.
+           APPLICATION RULE (app.css): buttons + controls = --radius-lg; panels/cards/
+           sections/modals = --radius-xl; pills = --radius-full; smaller only if essential. */
         --radius-sm: 4px;
         --radius-md: 6px;
         --radius-lg: 8px;
@@ -55,10 +60,12 @@
         --radius-2xl: 24px;
         --radius-full: 9999px;
 
-        /* Shadows - sm/md/lg */
-        --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        /* Shadows - oklch black, sm/md/lg + popover/modal (light defaults) */
+        --shadow-sm: 0 1px 3px oklch(0% 0 0 / 0.1), 0 1px 2px -1px oklch(0% 0 0 / 0.1);
+        --shadow-md: 0 4px 6px -1px oklch(0% 0 0 / 0.1), 0 2px 4px -2px oklch(0% 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px oklch(0% 0 0 / 0.1), 0 4px 6px -4px oklch(0% 0 0 / 0.1);
+        --shadow-popover: 0 12px 32px -8px oklch(0% 0 0 / 0.22);
+        --shadow-modal: 0 24px 60px -12px oklch(0% 0 0 / 0.28);
 
         /* Transitions */
         --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
@@ -66,9 +73,13 @@
         --duration-fast: 150ms;
         --duration-base: 200ms;
         --duration-slow: 300ms;
+        --duration-medium: 400ms;
+        --duration-long: 500ms;
         --transition-fast: var(--duration-fast) var(--ease-out);
         --transition-base: var(--duration-base) var(--ease-out);
         --transition-slow: var(--duration-slow) var(--ease-out);
+        --transition-medium: var(--duration-medium) var(--ease-out);
+        --transition-long: var(--duration-long) var(--ease-out);
 
         /* Hover effect */
         --hover-lift: -4px;
@@ -79,14 +90,25 @@
         --leading-normal: 1.5;
         --leading-relaxed: 1.625;
 
-        /* Font stacks */
-        --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        /* Font stacks (marketing Inter/Quicksand is the effective --font-sans) */
+        --font-sans: "Inter", "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --font-heading: "Quicksand", sans-serif;
         --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
 
         /* Z-index - dropdown/fixed/toast */
         --z-dropdown: 100;
         --z-fixed: 300;
         --z-toast: 800;
+
+        /* Container & layout */
+        --container-lg: 960px;
+        --container-xl: 1280px;
+        --topnav-height: 4rem;
+        --sidebar-width-left: 20%;
+        --sidebar-width-right: 20%;
+        --sw-l: clamp(10%, var(--sidebar-width-left), 100%);
+        --sw-r: clamp(10%, var(--sidebar-width-right), 100%);
+        --ctl-h: 2.25rem;
     }
 }
 
@@ -131,9 +153,6 @@
         }
     }
 
-    @media (prefers-contrast: more) {
-        :root { --border: currentColor; }
-    }
 }
 
 /* === Base Styles (~50 lines) === */
@@ -172,11 +191,6 @@
 @layer components {
     /* Container */
     .container { width: 100%; max-width: var(--container-lg); margin-inline: auto; padding-inline: 0; }
-    /* Content-width toggle (Appearance panel): narrow = 75% of the default, wide = no
-       cap; normal = the --container-lg default (no class). Applied pre-paint via
-       html.narrow / html.wide so there's no flash. */
-    html.narrow .container { max-width: calc(var(--container-lg) * 0.75); }
-    html.wide .container { max-width: none; }
 
     /* Cards - Mobile: no radius/side borders, Desktop: full styling */
     .card {
@@ -190,7 +204,7 @@
     }
 
     @media (min-width: 768px) {
-        .card { border-radius: var(--radius-xl); border-inline: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+        .card { border-radius: var(--radius-lg); border-inline: 1px solid var(--border); box-shadow: var(--shadow-sm); }
     }
 
     .card-hover:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--hover-shadow); }
@@ -280,7 +294,7 @@
         padding-block: var(--space-1);
         background-color: var(--bg-primary);
         border: 1px solid var(--border);
-        border-radius: var(--radius-xl);
+        border-radius: var(--radius-lg);
         box-shadow: var(--shadow-lg);
         opacity: 0;
         visibility: hidden;
@@ -325,7 +339,7 @@
         color: var(--fg-secondary);
         background-color: var(--bg-secondary);
         border: 1px solid var(--border);
-        border-radius: var(--radius-full);
+        border-radius: 9999px;
         transition: background-color var(--transition-fast), border-color var(--transition-fast);
     }
 
@@ -349,7 +363,7 @@
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid var(--glass-border, var(--border));
-        border-radius: var(--radius-lg);
+        border-radius: var(--radius-md);
         transition: background-color var(--transition-fast), color var(--transition-fast);
     }
     .menu-toggle:hover { background: var(--bg-tertiary); color: var(--accent); }
@@ -399,21 +413,19 @@
         container-type: inline-size;
     }
 
-    /* Narrow sidebar (e.g. 10% width): collapse horizontal groupings to a
-       single column so controls stay readable and tappable. */
+    /* Narrow sidebar (e.g. 10% width): collapse horizontal groupings to a single
+       column AND slim the widget padding so the controls are narrower and fit
+       without overflow (anything left over scrolls — .panel-content is overflow:auto). */
     @container (max-width: 230px) {
+        .appearance-section { padding: var(--space-2); }
         .toggle-group { flex-direction: column; }
         .toggle-btn { flex: 0 0 auto; padding: var(--space-1) var(--space-2); }
         .sidebar-width-controls { flex-direction: column; gap: var(--space-2); }
-        /* let the "Left/Right Width %" labels wrap so they can't force a horizontal
-           scrollbar inside the narrow panel. */
+        /* let the nowrap "Left/Right Width %" labels wrap so they can't force a
+           1px horizontal scrollbar inside the now overflow:auto panel at 10%. */
         .sidebar-width-control label { white-space: normal; }
         .scheme-item { justify-content: center; padding: var(--space-2); }
         .scheme-name { display: none; }
-        /* The rules above already stack the toggles + Left/Right width inputs into a
-           full-width column, so they share the same full width as the colour-swatch
-           rows below. Just tighten the section padding + carousel-nav gap. */
-        .appearance-section { padding: var(--space-2); }
         .carousel-nav { gap: var(--space-2); }
     }
 
@@ -424,8 +436,9 @@
     /* A .panel is a flex item with the default min-width:auto (= min-content), so at
        a small right-sidebar width its content forced it WIDER than the sidebar and the
        Appearance widgets spilled off the right edge. min-width:0 lets it shrink to
-       the sidebar width; clip any residual horizontal overflow. (Right only — the
-       left nav is allowed to overflow into content at very narrow widths.) */
+       the sidebar width; clip any residual horizontal overflow so the controls reflow
+       full-width. (Right only — the left nav is allowed to overflow into content at
+       very narrow widths.) */
     .sidebar-right .panel { min-width: 0; }
     .sidebar-right .panel-content { overflow-x: hidden; }
 
@@ -526,7 +539,7 @@
 
     .carousel-dot {
         width: 9px; height: 9px;
-        border-radius: var(--radius-full);
+        border-radius: 9999px;
         background: var(--fg-muted);
         opacity: 0.4;
         cursor: pointer;
@@ -565,6 +578,9 @@
         flex-shrink: 0;
     }
 
+    /* Vertical auto-scroll for long panels. The right sidebar additionally clips
+       horizontal overflow (.sidebar-right .panel-content rule above) so its Appearance
+       controls reflow full-width at narrow (10%) widths rather than h-scrolling. */
     .panel-content { flex: 1; overflow-y: auto; }
 
     .panel-content > nav { padding: var(--space-2) 0; display: flex; flex-direction: column; align-items: stretch; border: none; }
@@ -591,9 +607,10 @@
 
     .toggle-group {
         display: flex;
-        /* unify height with the other Appearance controls (--ctl-h) */
+        /* match the New-entry button's height exactly (shared --ctl-h) */
         min-height: var(--ctl-h);
         border: 1px solid var(--border);
+        /* same radius as the datatable New-entry button (--dt-r-md = .5rem = 8px) */
         border-radius: var(--radius-lg);
         overflow: hidden;
         margin-block-end: var(--space-4);
@@ -601,7 +618,7 @@
 
     .toggle-btn {
         flex: 1;
-        /* centre the label vertically so it stays centred as the button stretches
+        /* center the label vertically so it stays centred when the button stretches
            to fill the --ctl-h group height */
         display: flex;
         align-items: center;
@@ -630,7 +647,9 @@
         text-align: center; white-space: nowrap;
     }
     .sidebar-width-spinner {
-        /* --ctl-h governs the height; text-align centres the number, so no padding */
+        /* explicit padding:0 (beats the global input/textarea/select padding for
+           these two inputs only); --ctl-h governs the height, text-align centres
+           the number, so no padding is needed. */
         width: 100%; min-height: var(--ctl-h); padding: 0;
         font-variant-numeric: tabular-nums; text-align: center;
         appearance: textfield;
@@ -645,8 +664,9 @@
     .scheme-list { display: flex; flex-direction: column; gap: var(--space-1); }
     .scheme-item {
         display: flex; align-items: center; gap: var(--space-3);
-        /* same height as the other controls (--ctl-h); small vertical padding keeps the
-           natural height under --ctl-h so min-height governs and the row centres. */
+        /* same height as the New-entry button (shared --ctl-h); small vertical padding
+           keeps the natural height under --ctl-h so min-height governs and the dot+label
+           centre in the exact button height. */
         min-height: var(--ctl-h);
         padding: var(--space-1) var(--space-4);
         border: 2px solid transparent; border-radius: var(--radius-lg);
