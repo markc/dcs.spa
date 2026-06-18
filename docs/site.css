@@ -32,6 +32,9 @@
 
         /* Container widths */
         --container-xl: 1280px;
+        /* Content column max-width — driven by the Appearance width toggle
+           (html.narrow / html.wide below); the content grids reference it. */
+        --content-max: var(--container-xl);
 
         /* Marketing tokens */
         --hero-bg: url('Server_Room_Dark.webp');
@@ -163,6 +166,13 @@
     @media (prefers-color-scheme: dark) { :root:not(.light) { --code-token-l: 82%; } }
     html.dark { --code-token-l: 82%; }
     html.light { --code-token-l: 46%; }
+
+    /* Content-width toggle (Appearance panel): the marketing content grids cap at
+       --content-max (default --container-xl); narrow = 75%, wide = uncapped. Mirrors
+       base.css's html.narrow/.wide .container rules so both the framework container
+       and the marketing content respond to the toggle. */
+    html.narrow { --content-max: calc(var(--container-xl) * 0.75); }
+    html.wide { --content-max: none; }
 
     /* ============================================
        COLOR SCHEMES - Crimson, Stone, Forest, Sunset
@@ -654,7 +664,7 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: var(--space-4);
-        max-width: var(--container-xl);
+        max-width: var(--content-max);
         margin-inline: auto;
     }
 
@@ -750,7 +760,7 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: var(--space-6);
-        max-width: var(--container-xl);
+        max-width: var(--content-max);
         margin-inline: auto;
     }
 
@@ -882,7 +892,7 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: var(--space-8);
-        max-width: var(--container-xl);
+        max-width: var(--content-max);
         margin-inline: auto;
     }
 
