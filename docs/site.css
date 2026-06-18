@@ -377,6 +377,14 @@
        column narrows/widens. The hero's fixed background still spans full-bleed. */
     main {
         padding: 0;
+    }
+
+    /* Content-width column: cap each SECTION at --content-max (centered), NOT main
+       itself — main keeps base.css's pinned-sidebar margins, so pinning still restricts
+       the available width and the two compose (content width = min(--content-max, the
+       area between pinned sidebars)). The Appearance Narrow/Normal/Wide toggle drives
+       --content-max; the hero's fixed background stays full-bleed. */
+    main > section {
         max-width: var(--content-max);
         margin-inline: auto;
     }
@@ -578,6 +586,13 @@
     .bg-image-section .section-subtitle { color: #fff; }
 
     .bg-image-section .section-tag { color: var(--accent); }
+
+    /* Mono light: the accent is a dark grey that vanishes on the dark image — give the
+       image sections a light accent (same as the hero) so the section-tag stays legible. */
+    .scheme-mono:not(.dark) .bg-image-section {
+        --accent: oklch(90% 0 0);
+        --accent-hover: oklch(95% 0 0);
+    }
 
     .bg-image-section .section-header { margin-block-end: 0; }
 
