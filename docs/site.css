@@ -1050,5 +1050,3 @@
     .article-text { color: var(--fg-secondary); line-height: var(--leading-relaxed); }
     .icon-header { display: flex; align-items: center; gap: var(--space-2); }
 }
-
-/* ============================================

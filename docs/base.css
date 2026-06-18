@@ -1009,6 +1009,7 @@
     .hover-lift:hover { transform: translateY(var(--hover-lift)); box-shadow: var(--hover-shadow); }
 }
 
+/* ============================================
    TOUR DECK (sidebar slide-deck module)
    Independent mini-carousel inside an LHS panel
    ============================================ */
