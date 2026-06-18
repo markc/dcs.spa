@@ -21,10 +21,12 @@
            canonical base.css @layer tokens. site.css overrides a token only where this
            site genuinely differs; below is just the per-site marketing set. */
 
-        /* Content-width column — Narrow/Normal/Wide drive this as a PROPORTION of the
-           area between the pinned sidebars (each section caps at it, centered), so the
-           whole mid content narrows/widens together, resolution-independent. */
-        --content-max: 75%;   /* normal */
+        /* Content-width column — Narrow/Normal/Wide drive this as a fraction of the
+           VIEWPORT (screen) width: narrow 50vw, normal 75vw, wide = fill. Each section
+           caps at it (centred) and, living inside the sidebar-offset main, is clamped to
+           the area between the pinned sidebars — so narrow is always 50% of the screen,
+           while normal/wide fill the available area when the sidebars leave less. */
+        --content-max: 75vw;   /* normal */
 
         /* Marketing tokens (per-site: hero image path is site-relative) */
         --hero-bg: url('Server_Room_Dark.webp');
@@ -144,12 +146,12 @@
         --particle-opacity: 0.15;
     }
 
-    /* Content-width toggle (Appearance panel): each section caps at --content-max, a
-       PROPORTION of the area between the pinned sidebars — narrow 50%, normal 75%, wide
-       100% — so the split is the same ratio at any resolution. Buttons set html.narrow /
-       html.wide (pre-paint, no flash); the cap only applies in the >=1280px pinned layout. */
-    html.narrow { --content-max: 50%; }
-    html.wide   { --content-max: 100%; }
+    /* Content-width toggle (Appearance panel): --content-max is a fraction of the
+       VIEWPORT width — narrow 50vw, normal 75vw, wide fill — so narrow is 50% of the
+       screen regardless of sidebar width. Each section caps at it; clamped to the area
+       between the pinned sidebars. Only applies in the >=1280px pinned layout. */
+    html.narrow { --content-max: 50vw; }
+    html.wide   { --content-max: none; }
 
     /* ============================================
        COLOR SCHEMES - Crimson, Stone, Forest, Sunset
