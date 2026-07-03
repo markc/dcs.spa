@@ -25,6 +25,28 @@ function md(s) {
         return `\x00${b.length - 1}\x00`;
     });
 
+    // Fold hard-wrapped list-item continuation lines into their marker line.
+    // The line-based list regexes below only capture the marker line via
+    // `(.+)$`, so a wrapped continuation would dangle *outside* the <li> as
+    // loose text and render as its own un-bulleted line. Runs are opened only by
+    // a list marker; a blank line or a new block (heading / blockquote / table /
+    // hr / protected code placeholder) closes the run. Fenced code is already a
+    // single \x00N\x00 placeholder here, so it is never folded into item text.
+    {
+        const isMarker = l => /^[ ]*(?:[-*+]|\d+[.)])\s/.test(l);
+        const endsRun = l => /^[ ]*(?:#{1,6}\s|>|\||\x00\d+\x00\s*$)/.test(l) || /^[ ]*[-*_]{3,}\s*$/.test(l);
+        const out = [];
+        let run = null;
+        for (const ln of s.split('\n')) {
+            if (ln.trim() === '') { if (run !== null) { out.push(run); run = null; } out.push(ln); }
+            else if (isMarker(ln)) { if (run !== null) out.push(run); run = ln; }
+            else if (run !== null && !endsRun(ln)) { run += ' ' + ln.trim(); }
+            else { if (run !== null) { out.push(run); run = null; } out.push(ln); }
+        }
+        if (run !== null) out.push(run);
+        s = out.join('\n');
+    }
+
     // GFM Tables
     s = s.replace(/^(\|.+\|)\r?\n(\|[-:\| ]+\|)\r?\n((?:\|.+\|\r?\n?)+)/gm, (_, hdr, align, body) => {
         const hdrs = hdr.split('|').filter(c => c.trim()).map(c => c.trim());
