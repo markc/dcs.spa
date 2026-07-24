@@ -70,15 +70,31 @@ const Base = {
         );
     },
 
-    // Toast notification
+    // Toast notification. ms > 0 auto-dismisses after ms; ms <= 0 is STICKY (stays until the
+    // user clicks the close ×) — used for errors, which must persist long enough to read/act on.
     toast(msg, type = 'success', ms = 3000) {
         document.querySelector('.toast')?.remove();
         const t = document.createElement('div');
         t.className = `toast toast-${type}`;
-        t.textContent = msg;
         t.setAttribute('role', 'alert');
+        const span = document.createElement('span');
+        span.className = 'toast-msg';
+        span.textContent = msg;
+        t.appendChild(span);
+        const dismiss = () => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); };
+        const x = document.createElement('button');
+        x.type = 'button';
+        x.className = 'toast-close';
+        x.setAttribute('aria-label', 'Dismiss');
+        x.textContent = '×';
+        x.style.cssText = 'background:none;border:0;color:inherit;font:inherit;font-size:1.2em;line-height:1;cursor:pointer;opacity:.7;padding:0;margin-inline-start:.5rem';
+        x.addEventListener('click', dismiss);
+        t.appendChild(x);
+        t.style.display = 'flex';
+        t.style.alignItems = 'center';
         document.body.appendChild(t);
-        setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, ms);
+        if (ms > 0) setTimeout(dismiss, ms);
+        return t;
     },
 
     // Sidebar: toggle open/close (each side is autonomous)

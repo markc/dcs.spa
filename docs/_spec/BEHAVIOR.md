@@ -80,7 +80,7 @@ interactions:
     effect: "close all open dropdowns"
   toast-show:
     trigger: "Base.toast(message, type, ms)"
-    effect: "remove any existing .toast, append new one with role='alert', auto-dismiss after {ms} (default 3000), fade 300ms"
+    effect: "remove any existing .toast, append new one with role='alert' and a close × button; ms > 0 auto-dismisses after {ms} (default 3000), ms <= 0 is sticky until the × is clicked (use for errors); fade 300ms"
   sidebar-group-collapse:
     trigger: "click on .sidebar-group-title"
     effect: "toggle .collapsed on closest .sidebar-group"

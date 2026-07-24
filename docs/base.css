@@ -551,8 +551,15 @@
         opacity: 1;
     }
 
-    /* Panel Viewport & Track */
-    .panel-viewport { flex: 1; overflow: hidden; position: relative; }
+    /* Panel Viewport & Track.
+       min-height:0 down the whole flex chain (viewport → panel → panel-content)
+       is load-bearing: without it the default min-height:auto on each flex item
+       lets the TALLEST panel's content stretch the track past the sidebar height,
+       so every panel grows to that height and .panel-content's overflow-y:auto
+       never engages — the deck/Appearance content just spilled off the bottom of
+       the sidebar with no scrollbar. min-height:0 lets each item shrink back to
+       the viewport height so the innermost overflow-y:auto becomes the scroller. */
+    .panel-viewport { flex: 1; overflow: hidden; position: relative; min-height: 0; }
 
     .panel-track {
         display: flex;
@@ -565,6 +572,7 @@
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
+        min-height: 0;
     }
 
     .panel-title {
@@ -581,7 +589,7 @@
     /* Vertical auto-scroll for long panels. The right sidebar additionally clips
        horizontal overflow (.sidebar-right .panel-content rule above) so its Appearance
        controls reflow full-width at narrow (10%) widths rather than h-scrolling. */
-    .panel-content { flex: 1; overflow-y: auto; }
+    .panel-content { flex: 1; overflow-y: auto; min-height: 0; }
 
     .panel-content > nav { padding: var(--space-2) 0; display: flex; flex-direction: column; align-items: stretch; border: none; }
 
