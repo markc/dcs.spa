@@ -63,7 +63,7 @@ Markdown-to-HTML renderer for doc sites. `md()` (string → HTML), `loadDoc()` (
 - **Sidebar panel carousel** — each sidebar holds a horizontal carousel of panels (Navigation, Appearance, Tree/Docs). Slide (default) or fade transition; navigate via chevrons, dots, or `Base.setPanel(side, i)`.
 - **Appearance panel** — built-in right-sidebar panel: theme toggle, carousel-mode toggle, sidebar-width number spinners, scheme dots.
 - **Tree widget** — hierarchical nav (`.tree` → `.tree-branch`/`.tree-toggle`/`.tree-item`), depth via `--tree-depth`, collapse animates `grid-template-rows`. Used by the left-sidebar doc viewer rendering `docs/_doc/`.
-- **Sidebar resize** — drag the inner edge of either sidebar to set its width (1% precision, 10–100%), or use the Appearance spinners (step 10). A JS-injected `.sidebar-resizer` handle wires pointer-drag → live width var; the final width persists to `base-state` and restores verbatim on load. Hidden below 768px.
+- **Sidebar resize** — drag the inner edge of either sidebar to set its width (1% precision, 10–100%), or use the Appearance spinners (step 5). A JS-injected `.sidebar-resizer` handle wires pointer-drag → live width var; the final width persists to `base-state` and restores verbatim on load. Hidden below 768px.
 
 ### Icons
 

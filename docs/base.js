@@ -151,9 +151,9 @@ const Base = {
     },
 
     // Set + persist sidebar width (side = 'left' | 'right'). The spinner path
-    // snaps to step 10; drag passes an already-whole percent for 1% precision.
+    // snaps to step 5; drag passes an already-whole percent for 1% precision.
     setSidebarWidth(side, pct, snap = true) {
-        if (snap) pct = Math.round(pct / 10) * 10;
+        if (snap) pct = Math.round(pct / 5) * 5;
         pct = this.applySidebarWidth(side, pct);
         const key = side === 'left' ? 'sidebarWidthLeft' : 'sidebarWidthRight';
         this.state({ [key]: pct });
@@ -441,7 +441,7 @@ const Base = {
             }
         });
 
-        // Sidebar width spinners (independent left/right, 10-100%, step 10)
+        // Sidebar width spinners (independent left/right, 10-100%, step 5)
         document.querySelectorAll('.sidebar-width-spinner').forEach(input => {
             const apply = e => {
                 const v = parseInt(e.target.value);

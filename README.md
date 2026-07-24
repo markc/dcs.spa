@@ -112,7 +112,7 @@ Import the OKLCH color tokens into your Tailwind v4 `@theme` block and use React
 - **Panel carousel** inside each sidebar — slide or fade transitions, dots + chevron nav
 - **Appearance panel** (built in) — theme toggle, carousel-mode toggle, sidebar-width spinners, scheme dots
 - **Tree widget** — hierarchical nav (file browsers, doc TOCs) with collapsible branches and persisted expand state
-- **Resizable sidebars** — drag the inner edge (1% precision) or use the spinners (step 10); independent left/right, 10–100%, persisted to localStorage and restored on load
+- **Resizable sidebars** — drag the inner edge (1% precision) or use the spinners (step 5); independent left/right, 10–100%, persisted to localStorage and restored on load
 
 ### Cards
 - Mobile: edge-to-edge (no radius, no side borders)

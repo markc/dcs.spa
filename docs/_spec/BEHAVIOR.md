@@ -30,8 +30,8 @@ persistence:
     rightPinned: boolean
     leftPanel: integer
     rightPanel: integer
-    sidebarWidthLeft: "integer, 10–100, step 10"
-    sidebarWidthRight: "integer, 10–100, step 10"
+    sidebarWidthLeft: "integer, 10–100, step 5"
+    sidebarWidthRight: "integer, 10–100, step 5"
     treeExpanded: "array of branch indices"
 interactions:
   theme-toggle:
@@ -65,7 +65,7 @@ interactions:
     effect: "suppress transitions, apply mode-specific transforms/classes, force reflow, restore transitions; persist"
   sidebar-width:
     trigger: "change or blur on .sidebar-width-spinner"
-    effect: "clamp to 10–100 and snap to step 10; set --sidebar-width-<side> on :root; persist"
+    effect: "clamp to 10–100 and snap to step 5; set --sidebar-width-<side> on :root; persist"
   tree-toggle:
     trigger: "click on [.tree-toggle]"
     effect: "toggle .collapsed on closest .tree-branch; swap folder ↔ folder-open icon; persist array of expanded branch indices"
