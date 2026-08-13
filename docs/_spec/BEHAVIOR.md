@@ -89,7 +89,7 @@ interactions:
     effect: "toggle body.scrolled when scrollY > 0"
   scroll-reveal:
     trigger: "IntersectionObserver (single observer; rootMargin 0px 0px -8% 0px)"
-    effect: "elements already in view at load get .active + .reveal-instant (snap visible, no animation); the rest get .active one-way as they scroll into view, then are unobserved. No-IntersectionObserver fallback: all get .active immediately"
+    effect: "elements already in view at load get .active with the transition suppressed for one forced reflow and then restored (snap visible, no entrance animation, hover still animates); the rest get .active one-way as they scroll into view, then are unobserved. No-IntersectionObserver fallback: all get .active immediately"
   system-theme-change:
     trigger: "matchMedia('(prefers-color-scheme: dark)') change"
     effect: "if no explicit user theme persisted, swap html.dark ↔ html.light to match OS"
@@ -269,7 +269,7 @@ Fixed-position glassmorphic bar. Gains `body.scrolled` class the moment `scrollY
 
 ### Reveal (site.js)
 
-Elements with class `.reveal` start at `opacity: 0` and `translateY(100px) scale(0.95)`. At init, any already in view (`getBoundingClientRect().top < innerHeight`) get `.active` **and** `.reveal-instant`, so they snap to rest with no slide-up — no load-time animation. The rest are watched by a single `IntersectionObserver` (`rootMargin: 0px 0px -8% 0px`) and get `.active` one-way the moment they scroll into view, triggering the 500ms transition; each is then unobserved. One-way — never removed even if scrolled off-screen. If `IntersectionObserver` is unavailable, all elements get `.active` immediately.
+Elements with class `.reveal` start at `opacity: 0` and `translateY(100px) scale(0.95)`. At init, any already in view (`getBoundingClientRect().top < innerHeight`) are snapped to rest with no slide-up: the element's inline `transition` is set to `none`, `.active` is added, a reflow is forced (`void el.offsetWidth`), and the inline transition is then cleared so the stylesheet's own transition takes over again. The restore is load-bearing — the earlier `.reveal-instant` class set `transition: none !important` permanently, which also killed the hover lift on every card above the fold. The rest are watched by a single `IntersectionObserver` (`rootMargin: 0px 0px -8% 0px`) and get `.active` one-way the moment they scroll into view, triggering the 500ms transition; each is then unobserved. One-way — never removed even if scrolled off-screen. If `IntersectionObserver` is unavailable, all elements get `.active` immediately.
 
 ### Particles (site.js)
 

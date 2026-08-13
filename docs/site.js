@@ -40,9 +40,16 @@ const Site = {
         const els = document.querySelectorAll(".reveal");
         if (els.length === 0) return;
         const vh = window.innerHeight || document.documentElement.clientHeight;
-        // Already in view at load → snap visible, no animation.
+        // Already in view at load → snap visible with NO entrance animation,
+        // but restore the stylesheet transition afterwards so hover still animates.
+        // (A permanent `transition:none` here would kill the hover lift too.)
         els.forEach(el => {
-            if (el.getBoundingClientRect().top < vh) el.classList.add("active", "reveal-instant");
+            if (el.getBoundingClientRect().top < vh) {
+                el.style.transition = "none";
+                el.classList.add("active");
+                void el.offsetWidth;      // force reflow so the final state paints instantly
+                el.style.transition = "";  // hand transitions back to the stylesheet
+            }
         });
         if (!("IntersectionObserver" in window)) {
             els.forEach(el => el.classList.add("active"));
