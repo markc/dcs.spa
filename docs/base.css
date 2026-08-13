@@ -1,4 +1,4 @@
-/* Base CSS Framework - Mobile-First App Shell  —  base.css v1.0.0
+/* Base CSS Framework - Mobile-First App Shell  —  base.css v1.0.1
  * Modern, generic design system - override colors with site.css
  * Copyright © 2026 Mark Constable <mc@dcs.spa> (MIT License)
  *
@@ -240,7 +240,9 @@
     .btn-success:hover { background-color: color-mix(in srgb, var(--success) 85%, black); }
     .btn-danger { background-color: var(--danger); }
     .btn-danger:hover { background-color: color-mix(in srgb, var(--danger) 85%, black); }
-    .btn-warning { background-color: var(--warning); color: var(--bg-primary); }
+    /* --warning is light in BOTH modes, so its label is a fixed dark tone; --bg-primary
+       would go dark in dark mode and leave dark-on-light-on-dark. See .toast-warning. */
+    .btn-warning { background-color: var(--warning); color: oklch(15% 0.02 85); }
     .btn-warning:hover { background-color: color-mix(in srgb, var(--warning) 85%, black); }
 
     .btn-outline { background-color: transparent; border-color: var(--border); color: var(--fg-primary); }
@@ -325,9 +327,14 @@
         animation: toast-in var(--duration-slow) var(--ease-spring);
     }
 
-    .toast-success { background-color: var(--success); color: white; }
-    .toast-danger { background-color: var(--danger); color: white; }
-    .toast-warning { background-color: var(--warning); color: var(--bg-primary); }
+    /* Labels track the mode, they are not literals: --success/--danger invert with
+       the mode (dark ~45-52% L, light ~70% L), so a hardcoded `white` was unreadable
+       on the light dark-mode variants. --bg-primary inverts the same way.
+       --warning does NOT invert — it is light in both modes (70%/80%) — so its label
+       is a fixed dark tone rather than --bg-primary, which goes dark in dark mode. */
+    .toast-success { background-color: var(--success); color: var(--bg-primary); }
+    .toast-danger { background-color: var(--danger); color: var(--bg-primary); }
+    .toast-warning { background-color: var(--warning); color: oklch(15% 0.02 85); }
 
     /* Tags */
     .tag {
@@ -344,7 +351,7 @@
     }
 
     .tag:hover { background-color: var(--bg-tertiary); border-color: var(--fg-muted); }
-    .tag-danger { background-color: var(--danger); color: white; border-color: var(--danger); }
+    .tag-danger { background-color: var(--danger); color: var(--bg-primary); border-color: var(--danger); }
 
     /* Toggle Buttons */
     .menu-toggle {
