@@ -1,4 +1,4 @@
-/* Base CSS Framework - Mobile-First App Shell  —  base.css v1.0.1
+/* Base CSS Framework - Mobile-First App Shell  —  base.css v1.0.2
  * Modern, generic design system - override colors with site.css
  * Copyright © 2026 Mark Constable <mc@dcs.spa> (MIT License)
  *
@@ -245,10 +245,16 @@
     .btn-warning { background-color: var(--warning); color: oklch(15% 0.02 85); }
     .btn-warning:hover { background-color: color-mix(in srgb, var(--warning) 85%, black); }
 
+    /* Transparent buttons hover to --bg-tertiary, NOT --bg-secondary: .card and
+       .sidebar both paint --bg-secondary, so an outline/ghost button inside either
+       one had a hover indistinguishable from its own ground — the state changed and
+       nothing moved. --bg-tertiary differs from both --bg-primary and --bg-secondary,
+       so the hover reads on either, and it is already the framework's hover idiom
+       (.tag:hover, .toggle-btn:hover, .dropdown-menu a:hover, .scheme-item:hover). */
     .btn-outline { background-color: transparent; border-color: var(--border); color: var(--fg-primary); }
-    .btn-outline:hover { background-color: var(--bg-secondary); border-color: var(--fg-muted); }
+    .btn-outline:hover { background-color: var(--bg-tertiary); border-color: var(--fg-muted); }
     .btn-ghost { background-color: transparent; color: var(--fg-primary); }
-    .btn-ghost:hover { background-color: var(--bg-secondary); }
+    .btn-ghost:hover { background-color: var(--bg-tertiary); }
 
     .btn-sm { padding: var(--space-1) var(--space-3); font-size: var(--text-xs); }
     .btn-lg { padding: var(--space-3) var(--space-6); font-size: var(--text-base); }
