@@ -46,16 +46,22 @@
         --fg-primary:   oklch(25% 0.06 220);
         --fg-secondary: oklch(40% 0.08 220);
         --fg-muted:     oklch(50% 0.06 220);
-        --accent:       oklch(55% 0.12 220);
-        --accent-hover: oklch(60% 0.14 220);
+        --accent:       oklch(50% 0.12 220);
+        --accent-hover: oklch(45% 0.14 220);
         --accent-fg:    oklch(98% 0.01 220);
         --accent-subtle:oklch(92% 0.025 220);
-        --accent-glow:  oklch(55% 0.12 220 / 0.3);
+        --accent-glow:  oklch(50% 0.12 220 / 0.3);
+        /* Over the dark hero image, adopt this scheme's dark-mode accent — see .hero-bg */
+        --accent-on-image:       oklch(75% 0.12 220);
+        --accent-on-image-hover: oklch(85% 0.1 220);
+        --accent-on-image-fg:    oklch(15% 0.04 220);
+        --accent-on-image-glow:  oklch(75% 0.12 220 / 0.4);
         --border:       oklch(85% 0.02 220);
         --border-muted: oklch(90% 0.015 220);
         /* Semantic */
         --success:      oklch(45% 0.15 145);
-        --danger:       oklch(55% 0.2 25);
+        /* 52%, not 55%: --danger is also read as text on --bg-tertiary (92%) */
+        --danger:       oklch(52% 0.2 25);
         --warning:      oklch(70% 0.15 85);
         /* Glass */
         --glass:        oklch(98% 0.008 220);
@@ -77,12 +83,17 @@
             --bg-tertiary:  oklch(22% 0.025 220);
             --fg-primary:   oklch(95% 0.02 220);
             --fg-secondary: oklch(75% 0.05 220);
-            --fg-muted:     oklch(55% 0.04 220);
+            --fg-muted:     oklch(61% 0.04 220);
             --accent:       oklch(75% 0.12 220);
             --accent-hover: oklch(85% 0.1 220);
             --accent-fg:    oklch(15% 0.04 220);
             --accent-subtle:oklch(25% 0.04 220);
             --accent-glow:  oklch(75% 0.12 220 / 0.4);
+            /* Already a dark-ground accent; the image needs no substitution */
+            --accent-on-image:       oklch(75% 0.12 220);
+            --accent-on-image-hover: oklch(85% 0.1 220);
+            --accent-on-image-fg:    oklch(15% 0.04 220);
+            --accent-on-image-glow:  oklch(75% 0.12 220 / 0.4);
             --border:       oklch(30% 0.03 220);
             --border-muted: oklch(22% 0.02 220);
             --success:      oklch(70% 0.15 145);
@@ -105,12 +116,17 @@
         --bg-tertiary:  oklch(22% 0.025 220);
         --fg-primary:   oklch(95% 0.02 220);
         --fg-secondary: oklch(75% 0.05 220);
-        --fg-muted:     oklch(55% 0.04 220);
+        --fg-muted:     oklch(61% 0.04 220);
         --accent:       oklch(75% 0.12 220);
         --accent-hover: oklch(85% 0.1 220);
         --accent-fg:    oklch(15% 0.04 220);
         --accent-subtle:oklch(25% 0.04 220);
         --accent-glow:  oklch(75% 0.12 220 / 0.4);
+        /* Already a dark-ground accent; the image needs no substitution */
+        --accent-on-image:       oklch(75% 0.12 220);
+        --accent-on-image-hover: oklch(85% 0.1 220);
+        --accent-on-image-fg:    oklch(15% 0.04 220);
+        --accent-on-image-glow:  oklch(75% 0.12 220 / 0.4);
         --border:       oklch(30% 0.03 220);
         --border-muted: oklch(22% 0.02 220);
         --success:      oklch(70% 0.15 145);
@@ -133,11 +149,16 @@
         --fg-primary:   oklch(25% 0.06 220);
         --fg-secondary: oklch(40% 0.08 220);
         --fg-muted:     oklch(50% 0.06 220);
-        --accent:       oklch(55% 0.12 220);
-        --accent-hover: oklch(60% 0.14 220);
+        --accent:       oklch(50% 0.12 220);
+        --accent-hover: oklch(45% 0.14 220);
         --accent-fg:    oklch(98% 0.01 220);
         --accent-subtle:oklch(92% 0.025 220);
-        --accent-glow:  oklch(55% 0.12 220 / 0.3);
+        --accent-glow:  oklch(50% 0.12 220 / 0.3);
+        /* Over the dark hero image, adopt this scheme's dark-mode accent — see .hero-bg */
+        --accent-on-image:       oklch(75% 0.12 220);
+        --accent-on-image-hover: oklch(85% 0.1 220);
+        --accent-on-image-fg:    oklch(15% 0.04 220);
+        --accent-on-image-glow:  oklch(75% 0.12 220 / 0.4);
         --border:       oklch(85% 0.02 220);
         --border-muted: oklch(90% 0.015 220);
         --glass:        oklch(98% 0.008 220);
@@ -170,6 +191,11 @@
         --accent-fg:    oklch(98% 0.01 25);
         --accent-subtle:oklch(92% 0.04 25);
         --accent-glow:  oklch(47% 0.2 25 / 0.3);
+        /* Over the dark hero image, adopt this scheme's dark-mode accent — see .hero-bg */
+        --accent-on-image:       oklch(63% 0.23 25);
+        --accent-on-image-hover: oklch(70% 0.25 25);
+        --accent-on-image-fg:    oklch(15% 0.04 25);
+        --accent-on-image-glow:  oklch(63% 0.23 25 / 0.4);
         --border:       oklch(85% 0.02 25);
         --border-muted: oklch(90% 0.015 25);
         --glass:        oklch(98% 0.008 25);
@@ -182,12 +208,21 @@
         --bg-tertiary:  oklch(20% 0.025 25);
         --fg-primary:   oklch(95% 0.02 25);
         --fg-secondary: oklch(75% 0.04 25);
-        --fg-muted:     oklch(55% 0.03 25);
-        --accent:       oklch(54% 0.23 25);
-        --accent-hover: oklch(60% 0.25 25);
-        --accent-fg:    oklch(98% 0.01 25);
+        --fg-muted:     oklch(61% 0.03 25);
+        /* Crimson dark is the only dark scheme authored with a LIGHT --accent-fg.
+           No lightness exists at which a mid crimson both reads as link text on
+           bg1-3 and hosts a 98%-L label, so the label flips dark and the accent
+           lifts to clear the backgrounds. */
+        --accent:       oklch(63% 0.23 25);
+        --accent-hover: oklch(70% 0.25 25);
+        --accent-fg:    oklch(15% 0.04 25);
         --accent-subtle:oklch(20% 0.05 25);
-        --accent-glow:  oklch(54% 0.23 25 / 0.4);
+        --accent-glow:  oklch(63% 0.23 25 / 0.4);
+        /* Already a dark-ground accent; the image needs no substitution */
+        --accent-on-image:       oklch(63% 0.23 25);
+        --accent-on-image-hover: oklch(70% 0.25 25);
+        --accent-on-image-fg:    oklch(15% 0.04 25);
+        --accent-on-image-glow:  oklch(63% 0.23 25 / 0.4);
         --border:       oklch(28% 0.03 25);
         --border-muted: oklch(20% 0.02 25);
         --glass:        oklch(14% 0.02 25 / 0.85);
@@ -202,12 +237,17 @@
         --bg-tertiary:  oklch(92% 0.012 60);
         --fg-primary:   oklch(25% 0.02 60);
         --fg-secondary: oklch(45% 0.02 60);
-        --fg-muted:     oklch(55% 0.015 60);
+        --fg-muted:     oklch(50% 0.015 60);
         --accent:       oklch(45% 0.05 60);
         --accent-hover: oklch(35% 0.06 60);
         --accent-fg:    oklch(98% 0.005 60);
         --accent-subtle:oklch(92% 0.015 60);
         --accent-glow:  oklch(45% 0.05 60 / 0.3);
+        /* Over the dark hero image, adopt this scheme's dark-mode accent — see .hero-bg */
+        --accent-on-image:       oklch(80% 0.03 60);
+        --accent-on-image-hover: oklch(90% 0.02 60);
+        --accent-on-image-fg:    oklch(20% 0.02 60);
+        --accent-on-image-glow:  oklch(80% 0.03 60 / 0.3);
         --border:       oklch(85% 0.01 60);
         --border-muted: oklch(90% 0.008 60);
         --glass:        oklch(98% 0.005 60);
@@ -220,12 +260,17 @@
         --bg-tertiary:  oklch(22% 0.015 60);
         --fg-primary:   oklch(95% 0.01 60);
         --fg-secondary: oklch(75% 0.015 60);
-        --fg-muted:     oklch(55% 0.015 60);
+        --fg-muted:     oklch(61% 0.015 60);
         --accent:       oklch(80% 0.03 60);
         --accent-hover: oklch(90% 0.02 60);
         --accent-fg:    oklch(20% 0.02 60);
         --accent-subtle:oklch(25% 0.02 60);
         --accent-glow:  oklch(80% 0.03 60 / 0.3);
+        /* Already a dark-ground accent; the image needs no substitution */
+        --accent-on-image:       oklch(80% 0.03 60);
+        --accent-on-image-hover: oklch(90% 0.02 60);
+        --accent-on-image-fg:    oklch(20% 0.02 60);
+        --accent-on-image-glow:  oklch(80% 0.03 60 / 0.3);
         --border:       oklch(30% 0.015 60);
         --border-muted: oklch(22% 0.012 60);
         --glass:        oklch(16% 0.012 60 / 0.85);
@@ -241,11 +286,16 @@
         --fg-primary:   oklch(25% 0.06 150);
         --fg-secondary: oklch(40% 0.08 150);
         --fg-muted:     oklch(50% 0.06 150);
-        --accent:       oklch(50% 0.12 150);
-        --accent-hover: oklch(55% 0.14 150);
+        --accent:       oklch(49% 0.12 150);
+        --accent-hover: oklch(44% 0.14 150);
         --accent-fg:    oklch(98% 0.01 150);
         --accent-subtle:oklch(92% 0.025 150);
-        --accent-glow:  oklch(50% 0.12 150 / 0.3);
+        --accent-glow:  oklch(49% 0.12 150 / 0.3);
+        /* Over the dark hero image, adopt this scheme's dark-mode accent — see .hero-bg */
+        --accent-on-image:       oklch(70% 0.12 150);
+        --accent-on-image-hover: oklch(80% 0.1 150);
+        --accent-on-image-fg:    oklch(15% 0.04 150);
+        --accent-on-image-glow:  oklch(70% 0.12 150 / 0.3);
         --border:       oklch(85% 0.02 150);
         --border-muted: oklch(90% 0.015 150);
         --glass:        oklch(98% 0.008 150);
@@ -258,12 +308,17 @@
         --bg-tertiary:  oklch(22% 0.025 150);
         --fg-primary:   oklch(95% 0.02 150);
         --fg-secondary: oklch(75% 0.05 150);
-        --fg-muted:     oklch(55% 0.04 150);
+        --fg-muted:     oklch(61% 0.04 150);
         --accent:       oklch(70% 0.12 150);
         --accent-hover: oklch(80% 0.1 150);
         --accent-fg:    oklch(15% 0.04 150);
         --accent-subtle:oklch(25% 0.04 150);
         --accent-glow:  oklch(70% 0.12 150 / 0.3);
+        /* Already a dark-ground accent; the image needs no substitution */
+        --accent-on-image:       oklch(70% 0.12 150);
+        --accent-on-image-hover: oklch(80% 0.1 150);
+        --accent-on-image-fg:    oklch(15% 0.04 150);
+        --accent-on-image-glow:  oklch(70% 0.12 150 / 0.3);
         --border:       oklch(30% 0.03 150);
         --border-muted: oklch(22% 0.02 150);
         --glass:        oklch(16% 0.02 150 / 0.85);
@@ -278,12 +333,17 @@
         --bg-tertiary:  oklch(92% 0.02 45);
         --fg-primary:   oklch(30% 0.08 45);
         --fg-secondary: oklch(42% 0.1 45);
-        --fg-muted:     oklch(52% 0.08 45);
-        --accent:       oklch(60% 0.16 45);
-        --accent-hover: oklch(65% 0.18 45);
+        --fg-muted:     oklch(50% 0.08 45);
+        --accent:       oklch(52% 0.16 45);
+        --accent-hover: oklch(46% 0.18 45);
         --accent-fg:    oklch(98% 0.01 45);
         --accent-subtle:oklch(92% 0.03 45);
-        --accent-glow:  oklch(60% 0.16 45 / 0.3);
+        --accent-glow:  oklch(52% 0.16 45 / 0.3);
+        /* Over the dark hero image, adopt this scheme's dark-mode accent — see .hero-bg */
+        --accent-on-image:       oklch(72% 0.14 45);
+        --accent-on-image-hover: oklch(82% 0.12 45);
+        --accent-on-image-fg:    oklch(15% 0.05 45);
+        --accent-on-image-glow:  oklch(72% 0.14 45 / 0.3);
         --border:       oklch(85% 0.025 45);
         --border-muted: oklch(90% 0.02 45);
         --glass:        oklch(98% 0.01 45);
@@ -296,12 +356,17 @@
         --bg-tertiary:  oklch(22% 0.03 45);
         --fg-primary:   oklch(95% 0.025 45);
         --fg-secondary: oklch(75% 0.06 45);
-        --fg-muted:     oklch(55% 0.05 45);
+        --fg-muted:     oklch(61% 0.05 45);
         --accent:       oklch(72% 0.14 45);
         --accent-hover: oklch(82% 0.12 45);
         --accent-fg:    oklch(15% 0.05 45);
         --accent-subtle:oklch(25% 0.05 45);
         --accent-glow:  oklch(72% 0.14 45 / 0.3);
+        /* Already a dark-ground accent; the image needs no substitution */
+        --accent-on-image:       oklch(72% 0.14 45);
+        --accent-on-image-hover: oklch(82% 0.12 45);
+        --accent-on-image-fg:    oklch(15% 0.05 45);
+        --accent-on-image-glow:  oklch(72% 0.14 45 / 0.3);
         --border:       oklch(30% 0.035 45);
         --border-muted: oklch(22% 0.025 45);
         --glass:        oklch(16% 0.025 45 / 0.85);
@@ -316,12 +381,17 @@
         --bg-tertiary:  oklch(92% 0 0);
         --fg-primary:   oklch(20% 0 0);
         --fg-secondary: oklch(40% 0 0);
-        --fg-muted:     oklch(55% 0 0);
+        --fg-muted:     oklch(50% 0 0);
         --accent:       oklch(25% 0 0);
         --accent-hover: oklch(35% 0 0);
         --accent-fg:    oklch(98% 0 0);
         --accent-subtle:oklch(90% 0 0);
         --accent-glow:  oklch(25% 0 0 / 0.2);
+        /* Over the dark hero image, adopt this scheme's dark-mode accent — see .hero-bg */
+        --accent-on-image:       oklch(85% 0 0);
+        --accent-on-image-hover: oklch(92% 0 0);
+        --accent-on-image-fg:    oklch(12% 0 0);
+        --accent-on-image-glow:  oklch(85% 0 0 / 0.3);
         --border:       oklch(85% 0 0);
         --border-muted: oklch(90% 0 0);
         --glass:        oklch(98% 0 0);
@@ -334,12 +404,17 @@
         --bg-tertiary:  oklch(22% 0 0);
         --fg-primary:   oklch(95% 0 0);
         --fg-secondary: oklch(75% 0 0);
-        --fg-muted:     oklch(55% 0 0);
+        --fg-muted:     oklch(61% 0 0);
         --accent:       oklch(85% 0 0);
         --accent-hover: oklch(92% 0 0);
         --accent-fg:    oklch(12% 0 0);
         --accent-subtle:oklch(25% 0 0);
         --accent-glow:  oklch(85% 0 0 / 0.3);
+        /* Already a dark-ground accent; the image needs no substitution */
+        --accent-on-image:       oklch(85% 0 0);
+        --accent-on-image-hover: oklch(92% 0 0);
+        --accent-on-image-fg:    oklch(12% 0 0);
+        --accent-on-image-glow:  oklch(85% 0 0 / 0.3);
         --border:       oklch(30% 0 0);
         --border-muted: oklch(22% 0 0);
         --glass:        oklch(15% 0 0 / 0.85);
@@ -468,14 +543,22 @@
 
     html.light .hero-bg p { color: #fff; }
 
-    /* Mono light: accent is a dark grey, which disappears against the dark
-       hero image/overlay. Inside .hero-bg treat it as a dark context and
-       use a light grey so the shimmer + accent stay readable. Flip --accent-fg
-       dark too, or a .cta-btn.primary in the hero renders light-on-light. */
-    .scheme-mono:not(.dark) .hero-bg {
-        --accent: oklch(90% 0 0);
-        --accent-hover: oklch(95% 0 0);
-        --accent-fg: oklch(22% 0 0);
+    /* The hero and the image sections sit on Server_Room_Dark.webp, which bakes in
+       its own darkening — a dark ground in every scheme and both modes. A light
+       mode's --accent is tuned for a near-white surface and loses contrast there,
+       so each context declares what its accent becomes over the image (light modes
+       nominate their own dark-mode accent; dark modes nominate themselves).
+
+       --accent-fg moves WITH --accent: .cta-btn.primary lives inside .hero-bg and
+       pairs them. The hand-authored mono rule this replaces moved --accent and
+       --accent-fg only, and only for mono — every other light scheme kept a
+       light-tuned accent over the dark photo. */
+    .hero-bg,
+    .bg-image-section {
+        --accent:       var(--accent-on-image);
+        --accent-hover: var(--accent-on-image-hover);
+        --accent-fg:    var(--accent-on-image-fg);
+        --accent-glow:  var(--accent-on-image-glow);
     }
 
     .hero-bg > * {
@@ -583,13 +666,6 @@
     .bg-image-section .section-subtitle { color: #fff; }
 
     .bg-image-section .section-tag { color: var(--accent); }
-
-    /* Mono light: the accent is a dark grey that vanishes on the dark image — give the
-       image sections a light accent (same as the hero) so the section-tag stays legible. */
-    .scheme-mono:not(.dark) .bg-image-section {
-        --accent: oklch(90% 0 0);
-        --accent-hover: oklch(95% 0 0);
-    }
 
     .bg-image-section .section-header { margin-block-end: 0; }
 
@@ -753,16 +829,16 @@
     }
 
     /* per-scheme colours — light */
-    .service-card[data-card-scheme="ocean"]   { --sw-bg: oklch(98% 0.008 220); --sw-fg: oklch(25% 0.06 220); --sw-ac: oklch(55% 0.12 220); }
+    .service-card[data-card-scheme="ocean"]   { --sw-bg: oklch(98% 0.008 220); --sw-fg: oklch(25% 0.06 220); --sw-ac: oklch(50% 0.12 220); }
     .service-card[data-card-scheme="crimson"] { --sw-bg: oklch(98% 0.008 25);  --sw-fg: oklch(25% 0.04 25);  --sw-ac: oklch(47% 0.2 25); }
     .service-card[data-card-scheme="stone"]   { --sw-bg: oklch(98% 0.005 60);  --sw-fg: oklch(25% 0.02 60);  --sw-ac: oklch(45% 0.05 60); }
-    .service-card[data-card-scheme="forest"]  { --sw-bg: oklch(98% 0.008 150); --sw-fg: oklch(25% 0.06 150); --sw-ac: oklch(50% 0.12 150); }
-    .service-card[data-card-scheme="sunset"]  { --sw-bg: oklch(98% 0.01 45);   --sw-fg: oklch(30% 0.08 45);  --sw-ac: oklch(60% 0.16 45); }
+    .service-card[data-card-scheme="forest"]  { --sw-bg: oklch(98% 0.008 150); --sw-fg: oklch(25% 0.06 150); --sw-ac: oklch(49% 0.12 150); }
+    .service-card[data-card-scheme="sunset"]  { --sw-bg: oklch(98% 0.01 45);   --sw-fg: oklch(30% 0.08 45);  --sw-ac: oklch(52% 0.16 45); }
     .service-card[data-card-scheme="mono"]    { --sw-bg: oklch(98% 0 0);       --sw-fg: oklch(20% 0 0);      --sw-ac: oklch(25% 0 0); }
 
     /* per-scheme colours — dark */
     html.dark .service-card[data-card-scheme="ocean"]   { --sw-bg: oklch(12% 0.015 220); --sw-fg: oklch(95% 0.02 220); --sw-ac: oklch(75% 0.12 220); }
-    html.dark .service-card[data-card-scheme="crimson"] { --sw-bg: oklch(10% 0.015 25);  --sw-fg: oklch(95% 0.02 25);  --sw-ac: oklch(54% 0.23 25); }
+    html.dark .service-card[data-card-scheme="crimson"] { --sw-bg: oklch(10% 0.015 25);  --sw-fg: oklch(95% 0.02 25);  --sw-ac: oklch(63% 0.23 25); }
     html.dark .service-card[data-card-scheme="stone"]   { --sw-bg: oklch(12% 0.01 60);   --sw-fg: oklch(95% 0.01 60);  --sw-ac: oklch(80% 0.03 60); }
     html.dark .service-card[data-card-scheme="forest"]  { --sw-bg: oklch(12% 0.015 150); --sw-fg: oklch(95% 0.02 150); --sw-ac: oklch(70% 0.12 150); }
     html.dark .service-card[data-card-scheme="sunset"]  { --sw-bg: oklch(12% 0.02 45);   --sw-fg: oklch(95% 0.025 45); --sw-ac: oklch(72% 0.14 45); }
@@ -854,18 +930,52 @@
         text-decoration: none;
     }
 
+    /* The outlined CTA was authored white-on-10%-white for the hero, but it is also
+       used in #build, an opaque .content-section (--bg-secondary, 96% L in light
+       mode) — white on 96% white is invisible text, not low contrast. So the base
+       rule is base.css's own .btn-outline treatment (transparent + --border +
+       --fg-primary) and the always-dark grounds keep the frosted white explicitly.
+       Same principle as --accent-on-image: the element does not guess its ground,
+       the ground declares itself.
+
+       --border does not itself clear the 1.4.11 3:1 non-text floor in any of the
+       twelve contexts (85% L over a 96% L --bg-secondary in light modes). That is a
+       palette-wide gap, not this button's — it is deliberately spent through the
+       token rather than patched here with a bespoke mix, so that raising --border
+       fixes this control along with every other bordered one. The label itself
+       clears AA, so the control stays identifiable meanwhile. */
     .cta-btn.secondary {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--fg-primary);
+    }
+
+    /* .cta-btn.secondary is transparent, so its resting background IS whatever
+       surface it sits on; hovering to --bg-secondary would be invisible inside
+       #build, which is exactly what .content-section paints. --bg-tertiary differs
+       from both --bg-primary and --bg-secondary, so the hover reads on either.
+       This matches base.css, which had the same flaw in .btn-outline/.btn-ghost
+       until v1.0.2 fixed it framework-wide; .cta-btn is a site class, so it still
+       needs its own rule. */
+    .cta-btn.secondary:hover {
+        background: var(--bg-tertiary);
+        border-color: var(--fg-muted);
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+
+    .hero-bg .cta-btn.secondary,
+    .bg-image-section .cta-btn.secondary {
         background: rgb(255 255 255 / 0.1);
-        border: 1px solid rgb(255 255 255 / 0.3);
+        border-color: rgb(255 255 255 / 0.3);
         color: #fff;
         backdrop-filter: blur(10px);
     }
 
-    .cta-btn.secondary:hover {
+    .hero-bg .cta-btn.secondary:hover,
+    .bg-image-section .cta-btn.secondary:hover {
         background: rgb(255 255 255 / 0.2);
         border-color: #fff;
-        transform: translateY(-2px);
-        text-decoration: none;
     }
 
     /* ============================================
