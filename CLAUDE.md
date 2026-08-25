@@ -6,7 +6,7 @@ Project guidance for Claude Code.
 
 **DCS (Dual Carousel Sidebars)** is the canonical reference implementation of Mark's preferred web interface: dual off-canvas sidebars, each holding a carousel of panels, with OKLCH color schemes, dark/light modes, mobile-first layout, and marketing components. Zero dependencies (Lucide icons via CDN), no build step.
 
-**This repo is the single source of truth.** Any project using DCS (plain PHP, static HTML, Laravel + React) references `~/.gh/dcs.spa` as the authority. When told "use the DCS interface", read these files and reproduce the pattern.
+**This repo is the single source of truth.** Any project using DCS (plain PHP, static HTML, Laravel + React) references `~/Projects/dcs.spa` as the authority. When told "use the DCS interface", read these files and reproduce the pattern.
 
 **Showcase:** [dcs.spa](https://dcs.spa) — a self-documenting SPA built with DCS (GitHub Pages).
 
@@ -113,7 +113,7 @@ Root pages use `href="base.css"`; subpages use `href="../base.css"`. Serveable f
 ## Using DCS in Other Projects
 
 1. Read this file for the canonical pattern.
-2. Copy from `~/.gh/dcs.spa/docs/` (the real files, not root symlinks).
+2. Copy from `~/Projects/dcs.spa/docs/` (the real files, not root symlinks).
 3. Customize `site.css` for colors/branding. **Never** touch `base.css` / `base.js`.
 4. Deeper reference: `docs/_doc/` (architecture, color-system, components, usage-patterns); `docs/_spec/` for full regeneration specs.
 
