@@ -1,6 +1,6 @@
 ---
 name: save
-description: Write a _journal/YYYY-MM-DD.md entry for this session, then git add ., commit, and push. Use when the user says "save", "/save", or wants to wrap up a session in ~/.gh/dcs.spa.
+description: Write a _journal/YYYY-MM-DD.md entry for this session, then git add ., commit, and push. Use when the user says "save", "/save", or wants to wrap up a session in ~/Projects/dcs.spa.
 ---
 
 # save
