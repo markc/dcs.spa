@@ -60,8 +60,8 @@ sidebar-anatomy:
     element: ".carousel-header"
     height: "4rem (matches topnav-height)"
     children:
-      - ".pin-toggle (left sidebar: leading; right sidebar: trailing)"
-      - ".carousel-nav"
+      - ".carousel-nav (outer edge, right after the hamburger reserve)"
+      - ".pin-toggle (INNER edge — left sidebar: last child + margin-inline-start:auto; right sidebar: first child + margin-inline-end:auto)"
     padding-reserve: "3.75rem on the side facing the menu-toggle, to clear the hamburger"
   carousel-nav:
     children:
@@ -242,12 +242,12 @@ A sidebar is a two-row flex column:
 ```
 .sidebar (flex column, fixed, 100vh, container-type: inline-size)
 ├── .carousel-header              ← row 1, height 4rem, matches topnav
-│   ├── .pin-toggle               ← left: first; right: last (mirrored)
-│   └── .carousel-nav
-│       ├── .carousel-chevron[prev]
-│       ├── .carousel-dots
-│       │   └── .carousel-dot * N
-│       └── .carousel-chevron[next]
+│   ├── .carousel-nav             ← outer edge (after the hamburger reserve)
+│   │   ├── .carousel-chevron[prev]
+│   │   ├── .carousel-dots
+│   │   │   └── .carousel-dot * N
+│   │   └── .carousel-chevron[next]
+│   └── .pin-toggle               ← INNER edge; left: last child, right: first child (mirrored)
 └── .panel-viewport               ← row 2, flex: 1, overflow: hidden
     └── .panel-track              ← horizontal flex (slide) or stacked grid (fade)
         └── .panel * N            ← each 100% width
@@ -255,7 +255,7 @@ A sidebar is a two-row flex column:
             └── .panel-content    ← scrollable body
 ```
 
-**Mirror symmetry:** in the left sidebar, `.pin-toggle` is the *first* child of `.carousel-header` and `.carousel-nav` sits at flex-start; in the right sidebar, `.pin-toggle` is *last* and `.carousel-nav` sits at flex-end. This puts the pin button against the sidebar's inner edge (toward main content) and the carousel controls against the outer edge (near the viewport wall). The outer edge also reserves `3.75rem` of padding so the menu-toggle hamburger doesn't collide with carousel chevrons.
+**Mirror symmetry:** in the left sidebar, `.carousel-nav` is the *first* child of `.carousel-header` (flex-start, right after the `3.75rem` hamburger reserve) and `.pin-toggle` is *last* with `margin-inline-start: auto`; in the right sidebar it is mirrored — `.pin-toggle` first with `margin-inline-end: auto`, `.carousel-nav` last at flex-end before the reserve. So the carousel controls sit against the outer edge (near the viewport wall and the hamburger) and the pin sits against the **inner** edge, toward the main content — the boundary it reserves space from, where the resize handle also lives. Pinning only means anything while the sidebar is visible, so the control lives with the visible state, and the two control groups never compete for the narrow outer run (this mattered at 200px). DOM order matches visual order, so tab order is sane.
 
 **The three-column top row is foundational.** Left carousel header · topnav · right carousel header, all `--topnav-height` tall. The two headers belong to the fixed sidebars and never move; the topnav is in normal flow and scrolls away with the content. Do not replace this with a fixed full-width topnav — that was tried on 2026-09-01 and reverted the same day.
 

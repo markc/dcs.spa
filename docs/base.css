@@ -446,7 +446,16 @@
         .sidebar-width-control label { white-space: normal; }
         .scheme-item { justify-content: center; padding: var(--space-2); }
         .scheme-name { display: none; }
-        .carousel-nav { gap: var(--space-2); }
+        /* Header row budget at 200px: 60 (hamburger reserve) + nav + pin + padding must fit.
+           Default sizes give ~245px with 4 dots; these bring it to ~187px. Scoped under
+           .sidebar because @container adds no specificity and the base rules below would
+           otherwise win on source order. */
+        .sidebar .carousel-header { padding-inline: var(--space-1); }
+        .sidebar .carousel-nav { gap: var(--space-1); }
+        .sidebar .carousel-chevron { width: 1.25rem; height: 1.25rem; }
+        .sidebar .carousel-dots { gap: 0.25rem; }
+        .sidebar .carousel-dot.active { width: 16px; }
+        .sidebar .pin-toggle { margin-inline: var(--space-1); }
     }
 
     .sidebar-left { width: var(--sw-l); left: 0; transform: translateX(-100%); }
@@ -528,9 +537,14 @@
     }
 
     /* Same height as the topnav so the three top-row columns line up; the outer side
-       reserves room for the fixed 48px hamburger that sits over it. */
+       reserves room for the fixed 48px hamburger that sits over it. Carousel controls sit
+       at the outer edge (right after the hamburger); the pin sits at the INNER edge — the
+       boundary with the content it reserves space from, beside the resize handle — so
+       the two never compete for the narrow outer run. */
     .sidebar-left .carousel-header { justify-content: flex-start; padding-inline-start: 3.75rem; }
     .sidebar-right .carousel-header { justify-content: flex-end; padding-inline-end: 3.75rem; }
+    .sidebar-left .pin-toggle { margin-inline-start: auto; }
+    .sidebar-right .pin-toggle { margin-inline-end: auto; }
 
     .pin-toggle {
         background: none; border: none; color: var(--fg-muted); cursor: pointer;
