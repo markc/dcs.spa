@@ -25,8 +25,9 @@ locally. Anything else is how we got three forks.
 
 ## Part 1 — dcs.spa: adopt SPE defaults
 
-**Status: landed 2026-09-01** (see `_journal/2026-09-01.md`). The 300px cap was not
-adopted (§1.2 recommendation). One extra: `restore()` now has an explicit first-visit
+**Status: landed 2026-09-01** (see `_journal/2026-09-01.md`); **§1.3 reverted the same day**
+(`30d7508`) — see the note on that section. The 300px cap was not adopted (§1.2
+recommendation). One extra: `restore()` now has an explicit first-visit
 default — pinned on ≥960px, closed below — replacing an accidental
 `classList.toggle(name, undefined)` that opened both sidebars on every fresh visit.
 laradcs (Part 2) should sync to the dcs.spa commit that carries this.
@@ -100,7 +101,8 @@ Check the pinned state at 960–1279 px by hand — that range is newly pinnable
 
 ## Part 2 — laradcs: back-port to dcs.spa parity + consumer config
 
-**Status: landed 2026-09-01** as laradcs `24dc38d`, synced to dcs.spa `d71aa24`. Every row of
+**Status: landed 2026-09-01** as laradcs `24dc38d`, synced to dcs.spa `d71aa24`; geometry
+revert followed as `0c286aa` (synced to dcs.spa `30d7508`). Every row of
 §2.1 done (tree/toast skipped as optional); config surface = `storageKey`, `topnavHeight`,
 `defaults` props + `config/dcs.php` (`storage_key`, `topnav_height`) for the pre-paint script;
 1-panel sidebars render no carousel nav. Browser-verified at 800/900/1024/1280 — numbers
