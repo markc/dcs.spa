@@ -145,6 +145,13 @@ behind?" is a one-line check.
 
 ## Part 3 — consumers (after Parts 1–2)
 
+**Status (2026-09-01): sshm-desktop landed** — React 19 / Tailwind 4 / electron-vite 5 bump, then
+a fresh DCS renderer vendoring laradcs `5bb0687` byte-identical (`dcs-upstream.json` pin +
+Mix `_bin/dcs-sync` verify/--update; drift = exit 1 with a diff). Vendoring surfaced one upstream
+bug (laradcs `sidebar.tsx` composed `${side}-0` so consumers never got `left-0`/`right-0`),
+fixed upstream as `5bb0687` and re-vendored — the chain working as intended. **SPE rebase still
+open.**
+
 - **sshm-desktop**: bump to React 19 / Tailwind 4 / electron-vite 5, vendor the
   laradcs DCS files at the recorded SHA into `src/renderer/src/dcs/`, pin the SHA in
   its CLAUDE.md, add a Mix `_bin/dcs-sync` that diffs the vendored tree against the
