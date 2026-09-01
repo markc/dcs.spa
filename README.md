@@ -108,7 +108,7 @@ Import the OKLCH color tokens into your Tailwind v4 `@theme` block and use React
 ### App Shell
 - Fixed glass topnav, dual off-canvas sidebars (left + right)
 - **Autonomous sidebars** — each side toggles independently; opening one does not close the other
-- Pinnable on desktop (1280px+); pinned sidebars reserve space from main content
+- Pinnable from 960px (two 200px rails still leave a usable column on a tablet); pinned sidebars reserve space from main content
 - **Panel carousel** inside each sidebar — slide or fade transitions, dots + chevron nav
 - **Appearance panel** (built in) — theme toggle, carousel-mode toggle, sidebar-width spinners, scheme dots
 - **Tree widget** — hierarchical nav (file browsers, doc TOCs) with collapsible branches and persisted expand state

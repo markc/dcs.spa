@@ -77,7 +77,7 @@ Left and right sidebars are sized independently via `--sidebar-width-left` and `
 
 ### Pinning
 
-On viewports >= 1280px, sidebars can be **pinned** open. The main content area adjusts its margin to accommodate pinned sidebars. Pinned state persists across page loads.
+On viewports >= 960px, sidebars can be **pinned** open. The main content area adjusts its margin to accommodate pinned sidebars (the topnav is fixed above both and never moves). Pinned state persists across page loads; a first visit starts with both sidebars pinned on desktop and closed below 960px.
 
 ### Carousel Panels
 

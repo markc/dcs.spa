@@ -212,9 +212,10 @@ Layout is specified separately — see [`LAYOUT.md`](./LAYOUT.md) for HTML skele
 Values that inform token decisions elsewhere in this file:
 
 - **Container widths:** `--container-lg: 960px` (base), `--container-xl: 1280px` (marketing).
-- **Sidebar widths:** user-adjustable 10–100% in steps of 10, default 20% per side.
-- **Breakpoints:** 600px (tablet), 900px (3-col grids), 1200px (4-col grids), 1280px (sidebar pin).
-- **Topnav height:** 4rem, `position: relative` in document flow — this is what lets pinning push it horizontally via `margin-inline` rather than `transform`.
+- **Sidebar widths:** user-adjustable 10–100% per side (spinners step 5, drag 1%), default 15%, resolved as `clamp(200px, <pct>, 100%)` so a rail is never under 200px.
+- **Breakpoints:** 600px (tablet), 900px (3-col grids), 960px (sidebar pin), 1200px (4-col grids).
+- **Topnav height:** 4rem, `position: fixed`, full width above both sidebars. Sidebars start at `top: var(--topnav-height)`, so pinning pushes only `main` via `margin-inline`.
+- **Sidebar header height:** 3rem (`--sidebar-header-height`) — independent of the topnav.
 
 ## Elevation & Depth
 
@@ -243,7 +244,7 @@ In dark theme each tier uses `0.4` alpha instead of `0.1` because dark surfaces 
 
 Every component above composes tokens; none hard-code values. Notes on the non-obvious ones:
 
-- **`topnav`** — fixed, glassmorphic, height 64px. Gains `--nav-scrolled-bg` after scroll via a JS class toggle to feel grounded once the hero is off-screen.
+- **`topnav`** — fixed, glassmorphic, height 64px, full width above both sidebars. No scroll-state class (the `--nav-scrolled-bg` tokens remain defined for sites that want one).
 - **`sidebar`** — glassmorphic off-canvas panel hosting a horizontal carousel of sub-panels (Navigation, Appearance, Tree/Docs). Two transition modes: **slide** (translateX, default) and **fade** (opacity + grid stacking). The distinction matters because fade avoids horizontal overflow when panels contain wide content like documentation.
 - **`sidebar-nav-item-active`** — uses `accent-subtle` background + `accent` text. Same pattern as `badge` intentionally: both are "marked, not emphasised" states.
 - **`service-card`** — has a zero-opacity 3px top accent stripe that fades in on hover alongside a `accent-glow` box-shadow and a −4px translate. The lift is the only place the design breaks pure material-style flat layering.

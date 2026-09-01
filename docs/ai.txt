@@ -38,7 +38,7 @@ Optional:
 
 ## Features
 
-- **Dual off-canvas sidebars** (`.sidebar-left`, `.sidebar-right`) — each toggles independently; opening one does not close the other. Pinnable on viewports ≥ 1280px.
+- **Dual off-canvas sidebars** (`.sidebar-left`, `.sidebar-right`) — each toggles independently; opening one does not close the other. Pinnable on viewports ≥ 960px; first visit pins both on desktop, closed below.
 - **Panel carousel inside each sidebar** — horizontal stack of panels navigated via chevrons, dot indicators, or `Base.setPanel(side, index)`. Two motion modes: slide (physical) or fade (semantic).
 - **Six OKLCH color schemes** — Ocean (H=220, default), Crimson (H=25), Stone (H=60), Forest (H=150), Sunset (H=45), Mono (C=0 grayscale). Each with light + dark variants; only the hue rotates.
 - **Theme controls** — dark/light toggle, scheme picker, per-side sidebar width sliders (10–100%), carousel-mode switch. All live in the built-in Appearance panel and persist across reloads.
@@ -85,10 +85,10 @@ Structured facts for quick reference:
 - scheme_modes: 2 (light, dark)
 - total_palettes: 12
 - color_space: OKLCH
-- sidebar_pin_breakpoint: 1280px
+- sidebar_pin_breakpoint: 960px
 - grid_breakpoints: [600px, 900px, 1200px]
 - sidebar_width_range: 10%–100% (user-adjustable per side)
-- sidebar_width_default: 20%
+- sidebar_width_default: 15% (200px floor via clamp)
 - localStorage_key: base-state
 - dependencies: 0
 - build_steps: 0

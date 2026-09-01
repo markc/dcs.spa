@@ -25,6 +25,12 @@ locally. Anything else is how we got three forks.
 
 ## Part 1 — dcs.spa: adopt SPE defaults
 
+**Status: landed 2026-09-01** (see `_journal/2026-09-01.md`). The 300px cap was not
+adopted (§1.2 recommendation). One extra: `restore()` now has an explicit first-visit
+default — pinned on ≥960px, closed below — replacing an accidental
+`classList.toggle(name, undefined)` that opened both sidebars on every fresh visit.
+laradcs (Part 2) should sync to the dcs.spa commit that carries this.
+
 dcs.spa already has fluid `--text-*` `clamp()` tokens, the pre-paint `<head>` script
 (`base-state`), and the narrow/normal/wide content mode. Three things change.
 

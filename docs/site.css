@@ -170,7 +170,7 @@
     /* Content-width toggle (Appearance panel): --content-max is a fraction of the
        VIEWPORT width — narrow 50vw, normal 75vw, wide fill — so narrow is 50% of the
        screen regardless of sidebar width. Each section caps at it; clamped to the area
-       between the pinned sidebars. Only applies in the >=1280px pinned layout. */
+       between the pinned sidebars. Only applies in the >=960px pinned layout. */
     html.narrow { --content-max: 50vw; }
     html.wide   { --content-max: none; }
 
@@ -454,7 +454,7 @@
        the available width and the two compose (content width = min(--content-max, the
        area between pinned sidebars)). The Appearance Narrow/Normal/Wide toggle drives
        --content-max; the hero's fixed background stays full-bleed. */
-    @media (min-width: 1280px) {
+    @media (min-width: 960px) {
         main > section {
             max-width: var(--content-max);
             margin-inline: auto;

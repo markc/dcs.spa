@@ -14,8 +14,8 @@ motion:
 breakpoints:
   tablet: 600px
   desktop-narrow: 900px
+  sidebar-pin: 960px
   desktop: 1200px
-  sidebar-pin: 1280px
 persistence:
   key: base-state
   storage: localStorage
@@ -84,9 +84,6 @@ interactions:
   sidebar-group-collapse:
     trigger: "click on .sidebar-group-title"
     effect: "toggle .collapsed on closest .sidebar-group"
-  scroll-detect:
-    trigger: "window scroll (passive)"
-    effect: "toggle body.scrolled when scrollY > 0"
   scroll-reveal:
     trigger: "IntersectionObserver (single observer; rootMargin 0px 0px -8% 0px)"
     effect: "elements already in view at load get .active with the transition suppressed for one forced reflow and then restored (snap visible, no entrance animation, hover still animates); the rest get .active one-way as they scroll into view, then are unobserved. No-IntersectionObserver fallback: all get .active immediately"
@@ -160,7 +157,6 @@ Non-persisted state (ephemeral, recomputed on init):
 
 - Dropdown `.open` class.
 - Scroll-reveal `.active` class (set once per element via IntersectionObserver; one-way).
-- Topnav `.scrolled` class on body.
 - Lucide icon DOM nodes (re-rendered from `data-lucide` attributes).
 - Hover, focus, pressed visual states (pure CSS).
 
@@ -196,11 +192,10 @@ Runs on `DOMContentLoaded` (or immediately if `readyState !== 'loading'`). Order
 2. `restore()` — apply persisted sidebar widths, carousel mode, pinned/open state, panel positions, tree expansion.
 3. Attach delegated `click` listener on `document`.
 4. Attach `keydown` listener for Escape.
-5. Attach `matchMedia` listeners for `prefers-color-scheme` and `(min-width: 1280px)`.
-6. Attach per-input `change`/`blur` on sidebar-width spinners.
-7. Attach passive `scroll` listener for topnav.
-8. Render Lucide icons.
-9. On the next animation frame, remove the `preload` class to enable transitions.
+5. Attach `matchMedia` listeners for `prefers-color-scheme` and `(min-width: 960px)`.
+6. Attach per-input `change`/`blur` on sidebar-width spinners, and pointer handlers for the inner-edge resizers.
+7. Render Lucide icons.
+8. On the next animation frame, remove the `preload` class to enable transitions.
 
 ### Phase 3 — `Site.init()` (optional, marketing layer)
 
@@ -220,14 +215,14 @@ Six options: `default` (Ocean), `crimson`, `stone`, `forest`, `sunset`, `mono`. 
 
 ### Sidebar
 
-Three states per side: closed, open (off-canvas overlay), pinned (push content, ≥1280px only). State transitions:
+Three states per side: closed, open (off-canvas overlay), pinned (push content, ≥960px only). First visit (no saved key for that side): pinned on ≥960px, closed below. Saved state always wins — the restore coerces stored values to booleans, because `classList.toggle(name, undefined)` toggles rather than forcing false. State transitions:
 
 - **closed → open:** click `.menu-toggle[data-sidebar]`. Slides in at `duration-slow`.
-- **open → pinned:** click `.pin-toggle[data-sidebar]` (only visible at ≥1280px). Adds `body.<side>-pinned`, which applies `margin-inline-<side>: <sidebar-width>` to `main`, pushing content.
+- **open → pinned:** click `.pin-toggle[data-sidebar]` (only visible at ≥960px). Adds `body.<side>-pinned`, which applies `margin-inline-<side>: <sidebar-width>` to `main`, pushing content.
 - **pinned → closed:** click `.menu-toggle` closes *and* unpins. This is deliberate — `toggleSidebar` on an open sidebar removes both `.open` and `.pinned`, so menu click always means "go away" regardless of prior state. Without this, `restore()` would re-open the sidebar on next load.
-- **viewport shrink below 1280px:** all sidebars force-close but persisted `pinned` state is preserved, so returning to desktop reinstates.
+- **viewport shrink below 960px:** all sidebars force-close but persisted `pinned` state is preserved, so returning to desktop reinstates.
 
-Sidebar width is user-adjustable per side, 10–100%, stepped by 10. At 100% a sidebar covers the entire viewport — an emergent full-page panel use case that the carousel pattern makes useful (stack multiple 100% panels for a deck-of-cards navigation).
+Sidebar width is user-adjustable per side, 10–100% (spinners step 5, drag 1%), default 15%, with a 200px floor applied in CSS (`clamp(200px, <pct>, 100%)`) so a rail is never narrower than that whatever the percentage. At 100% a sidebar covers the entire viewport — an emergent full-page panel use case that the carousel pattern makes useful (stack multiple 100% panels for a deck-of-cards navigation).
 
 ### Panel Carousel
 
@@ -265,7 +260,7 @@ Collapsible grouping inside a sidebar panel. Click on `.sidebar-group-title` tog
 
 ### Topnav
 
-Fixed-position glassmorphic bar. Gains `body.scrolled` class the moment `scrollY > 0`, which triggers the `--nav-scrolled-bg` background variable. Passive listener — never blocks scroll.
+Fixed-position glassmorphic bar spanning the full viewport width above both sidebars; never pushed by pinning. No scroll-state behaviour.
 
 ### Reveal (site.js)
 
@@ -281,10 +276,10 @@ Four breakpoints, all `min-width`:
 
 - **600px:** service-card padding grows; grids switch from 1-col to 2-col; card border-radius becomes visible.
 - **900px:** 3-col grids activate for pricing and service variants.
+- **960px:** sidebar pin becomes possible. Below this, pin buttons are hidden and any pinned sidebar is force-closed. This is the *only* breakpoint handled in JS — all others are pure CSS.
 - **1200px:** 4-col service grids; banner sections grow vertically.
-- **1280px:** sidebar pin becomes possible. Below this, pin buttons are hidden and any pinned sidebar is force-closed. This is the *only* breakpoint handled in JS — all others are pure CSS.
 
-The 1280px threshold is handled by a `matchMedia` change listener rather than a resize listener so it only fires at the crossing. On shrink, open sidebars are closed but their `pinned` persistence is preserved for restore on re-enlarge.
+The 960px threshold is handled by a `matchMedia` change listener rather than a resize listener so it only fires at the crossing. On shrink, open sidebars are closed but their `pinned` persistence is preserved for restore on re-enlarge.
 
 ## Keyboard & Accessibility
 

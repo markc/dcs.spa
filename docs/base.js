@@ -256,7 +256,7 @@ const Base = {
     // Restore state on page load
     restore() {
         const s = this.state();
-        const desktop = window.innerWidth >= 1280;
+        const desktop = window.innerWidth >= 960; // mirrors base.css @media (min-width: 960px)
 
         // Restore sidebar widths (verbatim — drag stores 1% precision)
         if (s.sidebarWidthLeft) this.applySidebarWidth('left', s.sidebarWidthLeft);
@@ -287,8 +287,13 @@ const Base = {
         ['left', 'right'].forEach(side => {
             const sb = document.querySelector(`.sidebar-${side}`);
             if (!sb) return;
-            const pinned = s[side + 'Pinned'] && desktop;
-            const open = pinned || (s[side + 'Open'] && desktop);
+            // First visit (no saved key): pinned on desktop, closed below the pin regime.
+            // Saved state always wins. Both values are coerced to real booleans because
+            // classList.toggle(name, undefined) TOGGLES instead of forcing false — that
+            // accident used to open + pin both sidebars on every fresh visit, phones included.
+            const savedPinned = s[side + 'Pinned'];
+            const pinned = (savedPinned === undefined ? true : Boolean(savedPinned)) && desktop;
+            const open = pinned || (Boolean(s[side + 'Open']) && desktop);
             sb.classList.toggle('pinned', pinned);
             sb.classList.toggle('open', open);
             document.body.classList.toggle(side + '-pinned', pinned);
@@ -443,8 +448,8 @@ const Base = {
             }
         });
 
-        // Responsive: hide pinned sidebars when viewport shrinks to mobile
-        matchMedia('(min-width: 1280px)').addEventListener('change', e => {
+        // Responsive: hide pinned sidebars when viewport shrinks below the pin regime
+        matchMedia('(min-width: 960px)').addEventListener('change', e => {
             if (!e.matches) {
                 // Viewport went below desktop - close all sidebars
                 document.querySelectorAll('.sidebar.open').forEach(sb => {
@@ -506,11 +511,6 @@ const Base = {
         };
         document.addEventListener('pointerup', endDrag);
         document.addEventListener('pointercancel', endDrag);
-
-        // Scroll detection: seamless topnav/sidebar header effect
-        const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 0);
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
 
         // Lucide icons
         if (typeof lucide !== 'undefined') lucide.createIcons();

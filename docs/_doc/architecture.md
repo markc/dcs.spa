@@ -57,7 +57,7 @@ body
 - **`toggleTheme()`** — Switch between dark and light modes
 - **`setScheme(name)`** — Apply a color scheme class to `<html>`
 - **`toggleSidebar(side)`** — Open/close left or right sidebar
-- **`pinSidebar(side)`** — Pin sidebar open on desktop (1280px+)
+- **`pinSidebar(side)`** — Pin sidebar open on desktop (960px+)
 - **`setPanel(side, index)`** — Navigate carousel panels
 - **`toast(msg, type, ms)`** — Show a notification
 - **`restore()`** — Rehydrate UI from localStorage on page load

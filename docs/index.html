@@ -255,7 +255,7 @@
                                     <div class="deck-num" aria-hidden="true">03</div>
                                     <div class="deck-kicker">Mobile&#8209;First</div>
                                     <h3 class="deck-title">100% viewport.<br>Transform&#8209;based.<br>Buttery smooth.</h3>
-                                    <p class="deck-body">Below 1280&thinsp;px, sidebars live off&#8209;screen at full width. A hamburger reveals them via <code>transform</code> &mdash; GPU&#8209;accelerated, no reflow, no drawer library. Tap outside to dismiss.</p>
+                                    <p class="deck-body">Below 960&thinsp;px, sidebars live off&#8209;screen at full width. A hamburger reveals them via <code>transform</code> &mdash; GPU&#8209;accelerated, no reflow, no drawer library. Tap outside to dismiss.</p>
                                     <pre class="deck-code"><code><span class="tk-s">.sidebar</span> <span class="tk-p">{</span>
   <span class="tk-k">transform</span>: <span class="tk-v">translateX(-100%)</span>;
   <span class="tk-k">transition</span>: <span class="tk-v">transform 300ms</span>;
@@ -269,7 +269,7 @@
                                     <div class="deck-num" aria-hidden="true">04</div>
                                     <div class="deck-kicker">Desktop</div>
                                     <h3 class="deck-title">Pinned.<br>Persistent.<br>Asymmetric by default.</h3>
-                                    <p class="deck-body">At 1280&thinsp;px+, sidebars pin as columns. Content receives <code>margin&#8209;inline</code> &mdash; it reflows cleanly instead of being overlapped. Each side pins independently, so asymmetric layouts fall out for free.</p>
+                                    <p class="deck-body">At 960&thinsp;px+, sidebars pin as columns. Content receives <code>margin&#8209;inline</code> &mdash; it reflows cleanly instead of being overlapped. Each side pins independently, so asymmetric layouts fall out for free.</p>
                                     <div class="deck-stat">
                                         <div class="deck-stat-value">10&ndash;100%</div>
                                         <div class="deck-stat-label">user&#8209;adjustable width per side</div>
@@ -358,11 +358,11 @@
                         <div class="sidebar-width-controls">
                             <div class="sidebar-width-control">
                                 <label for="sidebar-width-left-input">Left %</label>
-                                <input id="sidebar-width-left-input" type="number" class="sidebar-width-spinner" data-side="left" min="10" max="100" value="20" step="5">
+                                <input id="sidebar-width-left-input" type="number" class="sidebar-width-spinner" data-side="left" min="10" max="100" value="15" step="5">
                             </div>
                             <div class="sidebar-width-control">
                                 <label for="sidebar-width-right-input">Right %</label>
-                                <input id="sidebar-width-right-input" type="number" class="sidebar-width-spinner" data-side="right" min="10" max="100" value="20" step="5">
+                                <input id="sidebar-width-right-input" type="number" class="sidebar-width-spinner" data-side="right" min="10" max="100" value="15" step="5">
                             </div>
                         </div>
                         <div class="scheme-list">
