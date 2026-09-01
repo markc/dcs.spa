@@ -94,6 +94,12 @@ Check the pinned state at 960–1279 px by hand — that range is newly pinnable
 
 ## Part 2 — laradcs: back-port to dcs.spa parity + consumer config
 
+**Status: landed 2026-09-01** as laradcs `24dc38d`, synced to dcs.spa `d71aa24`. Every row of
+§2.1 done (tree/toast skipped as optional); config surface = `storageKey`, `topnavHeight`,
+`defaults` props + `config/dcs.php` (`storage_key`, `topnav_height`) for the pre-paint script;
+1-panel sidebars render no carousel nav. Browser-verified at 800/900/1024/1280 — numbers
+identical to dcs.spa. Vendor set and boundary recorded in laradcs `_doc/2026-09-01-dcs-sync.md`.
+
 Files that carry DCS in laradcs (`resources/js/components/dcs/panel-carousel.tsx`,
 `dcs/sidebar.tsx`, `contexts/theme-context.tsx`, `css/dcs/tokens.css`,
 `dcs/panels/theme-panel.tsx`, `layouts/app/app-dual-sidebar-layout.tsx`).
