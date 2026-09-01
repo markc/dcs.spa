@@ -84,6 +84,9 @@ interactions:
   sidebar-group-collapse:
     trigger: "click on .sidebar-group-title"
     effect: "toggle .collapsed on closest .sidebar-group"
+  scroll-detect:
+    trigger: "window scroll (passive)"
+    effect: "toggle body.scrolled when scrollY > 0"
   scroll-reveal:
     trigger: "IntersectionObserver (single observer; rootMargin 0px 0px -8% 0px)"
     effect: "elements already in view at load get .active with the transition suppressed for one forced reflow and then restored (snap visible, no entrance animation, hover still animates); the rest get .active one-way as they scroll into view, then are unobserved. No-IntersectionObserver fallback: all get .active immediately"
@@ -157,6 +160,7 @@ Non-persisted state (ephemeral, recomputed on init):
 
 - Dropdown `.open` class.
 - Scroll-reveal `.active` class (set once per element via IntersectionObserver; one-way).
+- Topnav `.scrolled` class on body.
 - Lucide icon DOM nodes (re-rendered from `data-lucide` attributes).
 - Hover, focus, pressed visual states (pure CSS).
 
@@ -194,8 +198,9 @@ Runs on `DOMContentLoaded` (or immediately if `readyState !== 'loading'`). Order
 4. Attach `keydown` listener for Escape.
 5. Attach `matchMedia` listeners for `prefers-color-scheme` and `(min-width: 960px)`.
 6. Attach per-input `change`/`blur` on sidebar-width spinners, and pointer handlers for the inner-edge resizers.
-7. Render Lucide icons.
-8. On the next animation frame, remove the `preload` class to enable transitions.
+7. Attach passive `scroll` listener for topnav.
+8. Render Lucide icons.
+9. On the next animation frame, remove the `preload` class to enable transitions.
 
 ### Phase 3 — `Site.init()` (optional, marketing layer)
 
@@ -260,7 +265,7 @@ Collapsible grouping inside a sidebar panel. Click on `.sidebar-group-title` tog
 
 ### Topnav
 
-Fixed-position glassmorphic bar spanning the full viewport width above both sidebars; never pushed by pinning. No scroll-state behaviour.
+Glassmorphic bar in normal flow — the centre column of the top row between the two fixed sidebar headers; it scrolls away with the content while the sidebar headers stay. Pinned sidebars push it via `margin-inline`. Gains `body.scrolled` the moment `scrollY > 0`, which lets the sidebar inner rails extend to the top. Passive listener — never blocks scroll.
 
 ### Reveal (site.js)
 

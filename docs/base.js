@@ -512,6 +512,11 @@ const Base = {
         document.addEventListener('pointerup', endDrag);
         document.addEventListener('pointercancel', endDrag);
 
+        // Scroll detection: seamless topnav/sidebar header effect
+        const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 0);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
         // Lucide icons
         if (typeof lucide !== 'undefined') lucide.createIcons();
 

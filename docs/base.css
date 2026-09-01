@@ -104,7 +104,6 @@
         --container-lg: 960px;
         --container-xl: 1280px;
         --topnav-height: 4rem;
-        --sidebar-header-height: 3rem;
         /* Sidebar width: viewport-relative default with a px floor so a rail is never
            narrower than 200px (a 1024px viewport gives 200px per side, 624px main). The
            user-set percentage (spinners / drag) still ranges 10–100%; the floor wins
@@ -391,21 +390,19 @@
     .theme-toggle:hover { transform: scale(1.1); }
 
     /* === TopNav === */
-    /* Fixed, full-width, above both sidebars: the sidebars start beneath it
-       (top: var(--topnav-height)), so pinning never has to push the topnav. */
+    /* The centre column of the three-column top row. In normal flow, so it scrolls away
+       with the content; the sidebar carousel headers (fixed, same height) stay put either
+       side of it, level with the hamburgers. Pinned sidebars push it via margin-inline. */
     .topnav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
+        position: relative;
         height: var(--topnav-height);
-        z-index: var(--z-fixed);
         display: flex;
         align-items: center;
         justify-content: center;
         padding-inline: var(--space-4);
         background-color: var(--bg-secondary);
         border-block-end: 1px solid var(--border);
+        transition: margin var(--transition-slow);
     }
 
     h1:has(.brand) { margin: 0; font-size: var(--text-2xl); font-weight: 500; }
@@ -421,13 +418,13 @@
     }
 
     .topnav-user { display: flex; align-items: center; gap: var(--space-2); margin-inline-start: auto; margin-inline-end: var(--space-2); }
-    .topnav + .container { margin-block-start: calc(var(--topnav-height) + var(--space-4)); }
+    .topnav + .container { margin-block-start: var(--space-4); }
 
     /* === Sidebars === */
     .sidebar {
         position: fixed;
-        top: var(--topnav-height);
-        height: calc(100vh - var(--topnav-height));
+        top: 0;
+        height: 100vh;
         background: var(--bg-secondary);
         display: flex;
         flex-direction: column;
@@ -465,20 +462,22 @@
     .sidebar-right .panel { min-width: 0; }
     .sidebar-right .panel-content { overflow-x: hidden; }
 
-    /* Sidebar inner border via ::after — full height of the sidebar (which itself
-       starts below the fixed topnav). */
+    /* Sidebar inner border via ::after — animates from below topnav to top on scroll */
     .sidebar-left::after,
     .sidebar-right::after {
         content: '';
         position: absolute;
-        top: 0;
+        top: var(--topnav-height);
         bottom: 0;
         width: 1px;
         background: var(--border);
+        transition: top var(--transition-slow);
         z-index: 1;
     }
     .sidebar-left::after { right: 0; }
     .sidebar-right::after { left: 0; }
+    body.scrolled .sidebar-left::after,
+    body.scrolled .sidebar-right::after { top: 0; }
 
     /* Inner-edge resize handle — drag to set sidebar width.
        Injected by base.js; 10px hit area straddling the visible 1px border,
@@ -521,17 +520,17 @@
     .carousel-header {
         display: flex;
         align-items: center;
-        height: var(--sidebar-header-height);
+        height: var(--topnav-height);
         padding-inline: var(--space-2);
         border-block-end: 1px solid var(--border);
         gap: var(--space-1);
         flex-shrink: 0;
     }
 
-    /* Pin button against the inner edge, carousel controls toward the outer edge. The
-       hamburgers live in the topnav row above, so no padding reserve is needed here. */
-    .sidebar-left .carousel-header { justify-content: flex-start; }
-    .sidebar-right .carousel-header { justify-content: flex-end; }
+    /* Same height as the topnav so the three top-row columns line up; the outer side
+       reserves room for the fixed 48px hamburger that sits over it. */
+    .sidebar-left .carousel-header { justify-content: flex-start; padding-inline-start: 3.75rem; }
+    .sidebar-right .carousel-header { justify-content: flex-end; padding-inline-end: 3.75rem; }
 
     .pin-toggle {
         background: none; border: none; color: var(--fg-muted); cursor: pointer;
@@ -768,7 +767,7 @@
     .tree-children > div { overflow: hidden; min-height: 0; }
 
     /* Main */
-    main { margin-block-start: var(--topnav-height); padding: var(--space-4); transition: margin var(--transition-slow); }
+    main { padding: var(--space-4); transition: margin var(--transition-slow); }
 
     /* === Prose (Markdown/Article) === */
     .prose { line-height: var(--leading-relaxed); }
@@ -1019,6 +1018,8 @@
         body.left-pinned main { margin-inline-start: var(--sw-l); }
         body.right-pinned main { margin-inline-end: var(--sw-r); }
         body.left-pinned.right-pinned main { margin-inline: var(--sw-l) var(--sw-r); }
+        body.left-pinned .topnav { margin-inline-start: var(--sw-l); }
+        body.right-pinned .topnav { margin-inline-end: var(--sw-r); }
         .grid-3 { grid-template-columns: repeat(3, 1fr); }
     }
 }

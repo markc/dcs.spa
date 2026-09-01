@@ -15,7 +15,6 @@ containers:
   lg: 960px
   xl: 1280px
   topnav-height: 4rem
-  sidebar-header-height: 3rem
   sidebar-width-default: 15%
   sidebar-width-min: 10%
   sidebar-width-max: 100%
@@ -24,6 +23,7 @@ containers:
   menu-toggle-size: 48px
   menu-toggle-offset-top: 0.5rem
   menu-toggle-offset-side: 0.75rem
+  menu-toggle-reserve: 3.75rem
 breakpoints:
   tablet: 600px
   desktop-narrow: 900px
@@ -33,9 +33,8 @@ positioning:
   body: "normal flow; background: fixed hero image (center/cover)"
   particles: "position: fixed; inset: 0; pointer-events: none"
   menu-toggle: "position: fixed; top: 0.5rem; left|right: 0.75rem; size 48×48"
-  topnav: "position: fixed; top 0; left 0; right 0; height 4rem; z-index 300 — full width above both sidebars"
-  sidebar: "position: fixed; top: var(--topnav-height); height: calc(100vh - var(--topnav-height))"
-  main: "margin-block-start: var(--topnav-height)"
+  topnav: "position: relative (in flow); height 4rem — the centre column of the top row, scrolls away with content"
+  sidebar: "position: fixed; top: 0; height: 100vh — its carousel header is the left/right column of the top row"
   sidebar: "position: fixed; top: 0; height: 100vh"
   sidebar-left-closed: "transform: translateX(-100%)"
   sidebar-right-closed: "transform: translateX(100%)"
@@ -59,10 +58,11 @@ sidebar-anatomy:
   root: "aside.sidebar (flex column, container-type: inline-size)"
   header:
     element: ".carousel-header"
-    height: "3rem (--sidebar-header-height; independent of the topnav, which sits above the sidebar)"
+    height: "4rem (matches topnav-height)"
     children:
       - ".pin-toggle (left sidebar: leading; right sidebar: trailing)"
       - ".carousel-nav"
+    padding-reserve: "3.75rem on the side facing the menu-toggle, to clear the hamburger"
   carousel-nav:
     children:
       - ".carousel-chevron[data-dir='prev']"
@@ -128,7 +128,8 @@ pin-geometry:
   main-left-pinned: "margin-inline-start: var(--sw-l)"
   main-right-pinned: "margin-inline-end: var(--sw-r)"
   main-both-pinned: "margin-inline: var(--sw-l) var(--sw-r)"
-  topnav: "never pushed — it is fixed above the sidebars"
+  topnav-left-pinned: "margin-inline-start: var(--sw-l)"
+  topnav-right-pinned: "margin-inline-end: var(--sw-r)"
   pin-toggle-visibility: "display: none below 960px; display: block at ≥960px"
   first-visit: "no saved key → pinned on desktop (≥960px), closed below; saved state always wins"
 ---
@@ -254,13 +255,15 @@ A sidebar is a two-row flex column:
             └── .panel-content    ← scrollable body
 ```
 
-**Mirror symmetry:** in the left sidebar, `.pin-toggle` is the *first* child of `.carousel-header` and `.carousel-nav` sits at flex-start; in the right sidebar, `.pin-toggle` is *last* and `.carousel-nav` sits at flex-end. This puts the pin button against the sidebar's inner edge (toward main content) and the carousel controls against the outer edge (near the viewport wall). The hamburgers live in the topnav row above the sidebar, so the header needs no padding reserve.
+**Mirror symmetry:** in the left sidebar, `.pin-toggle` is the *first* child of `.carousel-header` and `.carousel-nav` sits at flex-start; in the right sidebar, `.pin-toggle` is *last* and `.carousel-nav` sits at flex-end. This puts the pin button against the sidebar's inner edge (toward main content) and the carousel controls against the outer edge (near the viewport wall). The outer edge also reserves `3.75rem` of padding so the menu-toggle hamburger doesn't collide with carousel chevrons.
+
+**The three-column top row is foundational.** Left carousel header · topnav · right carousel header, all `--topnav-height` tall. The two headers belong to the fixed sidebars and never move; the topnav is in normal flow and scrolls away with the content. Do not replace this with a fixed full-width topnav — that was tried on 2026-09-01 and reverted the same day.
 
 **Container query:** `.sidebar { container-type: inline-size }` enables an internal breakpoint at `max-width: 230px` that collapses horizontal controls (toggle-group, width spinners, scheme dots) to a vertical stack. This is why a 10%-wide sidebar on a narrow viewport is still usable — the controls adapt to the sidebar's own width, not the viewport's.
 
 **Panel height:** each panel is a flex column with a fixed-height `.panel-title` (flex-shrink: 0) and a scrollable `.panel-content` (flex: 1, overflow-y: auto). This means panel scrolling is local to the panel; the sidebar header and title stay pinned while panel content scrolls.
 
-**Sidebar inner border** is a `::after` pseudo-element, 1px vertical line, `top: 0` to `bottom: 0` of the sidebar. The sidebar itself starts under the fixed topnav, so the line naturally runs from the topnav's bottom edge to the viewport bottom — no scroll-state animation is needed.
+**Sidebar inner border** is a `::after` pseudo-element, 1px vertical line, positioned from `top: var(--topnav-height)` to `bottom: 0`. When `body.scrolled` is set (any scrollY > 0), it animates `top` to `0` so the border runs full-height. This visual continuity sells the "topnav is floating on top of the sidebars" effect even though the topnav is actually in flow *between* the two sidebars in the z-stack.
 
 ## Section Types
 
@@ -305,15 +308,18 @@ The grids deliberately skip some breakpoints. A 4-column services grid would fee
 
 Pinning is available at `≥960px` only. Below that, `.pin-toggle` is `display: none` and any pinned state in localStorage is ignored (see BEHAVIOR.md § Responsive). 960 is chosen so a tablet-class viewport (1024px) can pin both sides and still keep a 624px main column — the layout used for the SPE tutorial recordings at 4K.
 
-**Crucial design choice:** a pinned sidebar does not use `transform` to push content — it remains `position: fixed` at `translateX(0)`. The push happens entirely via `margin-inline` on `main`:
+**Crucial design choice:** a pinned sidebar does not use `transform` to push content — it remains `position: fixed` at `translateX(0)`. The push happens entirely via `margin-inline` on `main` and `.topnav`:
 
 ```css
 body.left-pinned main       { margin-inline-start: var(--sw-l); }
 body.right-pinned main      { margin-inline-end:   var(--sw-r); }
 body.left-pinned.right-pinned main { margin-inline: var(--sw-l) var(--sw-r); }
+
+body.left-pinned .topnav  { margin-inline-start: var(--sw-l); }
+body.right-pinned .topnav { margin-inline-end:   var(--sw-r); }
 ```
 
-The topnav is never pushed: it is `position: fixed` across the full viewport width and the sidebars start beneath it (`top: var(--topnav-height)`). `main` carries `margin-block-start: var(--topnav-height)` to clear it.
+Why separate margins on topnav and main rather than one margin on `<body>`? Because the topnav is `position: relative` in document flow *before* the sidebars in DOM order, but it visually sits next to pinned sidebars. Each needs its own horizontal push.
 
 Width is driven by the clamped custom properties (200px floor, viewport-relative default):
 
@@ -349,7 +355,7 @@ Swap the image by overriding the `--hero-bg` custom property per-project (e.g. `
 - Keep the skeleton order. Particles → toggles → topnav → sidebars → main is load-bearing for z-stacking and pinning geometry.
 - Place the pre-script inline in `<head>` before any stylesheet. No deferred loading — it has to run before first paint.
 - Use `.content-section` and `.bg-image-section` alternately for marketing pages. They are designed as a rhythmic pair.
-- Keep the hamburgers in the topnav row (fixed, `top: 0.5rem`). The carousel header sits below the topnav and needs no padding reserve for them.
+- Reserve `3.75rem` of inline padding in `.carousel-header` on the side facing the menu-toggle. The hamburger lives there and will collide with carousel chevrons otherwise.
 - Let the container query in `.sidebar` handle narrow widths. Do not add per-viewport media queries that duplicate what the internal `container-type: inline-size` already does.
 - Centre content with `max-width: var(--container-xl)` + `margin-inline: auto`. Do not set explicit pixel widths on section containers.
 

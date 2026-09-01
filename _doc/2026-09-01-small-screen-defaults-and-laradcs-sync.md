@@ -67,7 +67,13 @@ layouts, gains SPE's floor and default):
 - **Open call for Mark:** keep the 300 px cap as well (`clamp(200px, …, 300px)`)
   and give up drag-to-100 %? Recommendation: no.
 
-### 1.3 Geometry: sidebars below the topnav
+### 1.3 Geometry: sidebars below the topnav — **WRONG, REVERTED 2026-09-01**
+
+> This section mistook a pattern for a parameter. The three-column top row — fixed sidebar
+> carousel headers left and right, level with the hamburgers, with the in-flow topnav in the
+> centre that scrolls away with the content — is foundational DCS and stays. SPE's fixed
+> full-width topnav is SPE's own simplification, not a default to adopt. Only §1.1 and §1.2
+> are "SPE defaults". Kept below for the record; do not implement.
 
 Today: `.sidebar { top: 0; height: 100vh }`, the carousel header is
 `--topnav-height` tall with 3.75 rem padding reserved for the hamburger, pinned
@@ -110,7 +116,7 @@ Files that carry DCS in laradcs (`resources/js/components/dcs/panel-carousel.tsx
 |---|---|---|
 | Width | one shared px width 200–500, slider | per-side, `15%` default, `clamp(200px, …, 100%)`, spinners step 5, drag 1 % |
 | Breakpoint | 1280 (`matchMedia` + `xl:` classes) | 960 |
-| Geometry | `fixed top-0 h-screen`, header aligned to topnav | below topnav (`top: var(--topnav-height)`) |
+| Geometry | `fixed top-0 h-screen`, header aligned to topnav | **unchanged** — that is the canonical three-column top row (§1.3 was reverted) |
 | Schemes | ocean, crimson, stone, forest, sunset | + **mono**; `default` naming as dcs.spa (or document the `ocean` alias explicitly) |
 | Carousel wrap | `(i+1) % len` — snaps back across all panels | directional slide on wrap (dcs.spa `setPanel` offset trick) |
 | Narrow sidebars | — | `container-type: inline-size` + dcs.spa's `@container (max-width: 230px)` reflow rules |

@@ -38,9 +38,9 @@ Two layers. Never modify the base layer per-site.
 
 ### base.css
 
-CSS cascade layers: `reset, tokens, base, components, utilities, animations`. Defines **no colors** — all come from `site.css` custom properties. Mobile-first (single column, enhanced at 768px; sidebar pin regime from 960px). Cards are edge-to-edge on mobile, fully styled on desktop. The topnav is `position: fixed`, full width, above both sidebars; sidebars start beneath it (`top: var(--topnav-height)`), so pinning only ever pushes `main`. Hamburger buttons are 48×48 in the topnav row and stay visible when sidebars are pinned.
+CSS cascade layers: `reset, tokens, base, components, utilities, animations`. Defines **no colors** — all come from `site.css` custom properties. Mobile-first (single column, enhanced at 768px; sidebar pin regime from 960px). Cards are edge-to-edge on mobile, fully styled on desktop. **Three-column top row (foundational):** the fixed sidebars' carousel headers are the left and right columns, the in-flow topnav is the centre — all `--topnav-height` tall. The topnav scrolls away with the content; the headers (and the 48×48 hamburgers over them) stay. Pinned sidebars push both `main` and `.topnav` via `margin-inline`. Never replace this with a fixed full-width topnav.
 
-Tokens include `--sidebar-width-left` / `--sidebar-width-right` (default 15%), resolved via `--sw-l` / `--sw-r` as `clamp(200px, <pct>, 100%)` — the user-set percentage ranges 10–100% but a rail is never narrower than 200px (1024px viewport → 200 / 624 / 200). `--sidebar-header-height` (3rem) sizes the carousel header. These small-screen defaults come from the SPE tutorial recordings (1024 CSS px at 4K) and are the canonical values for every DCS port.
+Tokens include `--sidebar-width-left` / `--sidebar-width-right` (default 15%), resolved via `--sw-l` / `--sw-r` as `clamp(200px, <pct>, 100%)` — the user-set percentage ranges 10–100% but a rail is never narrower than 200px (1024px viewport → 200 / 624 / 200). These small-screen defaults come from the SPE tutorial recordings (1024 CSS px at 4K) and are the canonical values for every DCS port.
 
 ### base.js
 
