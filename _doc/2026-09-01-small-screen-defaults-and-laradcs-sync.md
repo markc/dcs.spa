@@ -157,8 +157,13 @@ behind?" is a one-line check.
 a fresh DCS renderer vendoring laradcs `5bb0687` byte-identical (`dcs-upstream.json` pin +
 Mix `_bin/dcs-sync` verify/--update; drift = exit 1 with a diff). Vendoring surfaced one upstream
 bug (laradcs `sidebar.tsx` composed `${side}-0` so consumers never got `left-0`/`right-0`),
-fixed upstream as `5bb0687` and re-vendored — the chain working as intended. **SPE rebase still
-open.**
+fixed upstream as `5bb0687` and re-vendored — the chain working as intended.
+
+**SPE landed 2026-09-01** (`markc/spe`): `base.css` / `site.css` / `base.js` vendored byte-identical
+from dcs.spa `12fbaa6` (pinned in `dcs-upstream.json`, `_bin/dcs-sync` guard), SPE-specific CSS in
+`spe.css`, full shell with two carousel panels a side across root, chapters 02–09 and the docs
+site, six schemes, 09-Blog Home using the marketing components. All four DCS consumers are now
+on the same canonical files.
 
 - **sshm-desktop**: bump to React 19 / Tailwind 4 / electron-vite 5, vendor the
   laradcs DCS files at the recorded SHA into `src/renderer/src/dcs/`, pin the SHA in
